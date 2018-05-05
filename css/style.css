@@ -1,0 +1,65 @@
+* {
+    box-sizing: border-box;
+}
+
+.page-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    /* TODO: get better height */
+    height: 98vh;
+}
+
+.page-container > header {
+    grid-area: header;
+}
+
+.page-container > main {
+    grid-area: main;
+    overflow-y: auto;
+}
+
+.page-container > footer {
+    grid-area: footer;
+}
+
+.note-container {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "due-date title importance"
+        "due-state description action";
+}
+
+.note-container > .note-due-date {
+    grid-area: due-date;
+}
+
+.note-container > .note-title {
+    grid-area: title;
+}
+
+.note-container > .note-importance {
+    grid-area: importance;
+}
+
+.note-container > .note-due-state {
+    grid-area: due-state;
+}
+
+.note-container > .note-description {
+    grid-area: description;
+}
+
+.note-container > .note-actions {
+    grid-area: action;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+}

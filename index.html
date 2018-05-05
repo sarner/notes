@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Notes</title>
+        <link rel="stylesheet" href="./css/style.css" />
+    </head>
+    <body>
+        <div class="page-container">
+            <header>
+                <h1>
+                    <span>Notes - </span>
+                    <small>organize your day</small>
+                </h1>
+                <nav>
+                    <div class="button-group">
+                        <button>Create new note</button>
+                    </div>
+                    <div>
+                        <label for="styleSelector">Choose style:</label>
+                        <select id="styleSelector">
+                            <option value="black-white">Black & white</option>
+                            <option value="color">Color</option>
+                        </select>
+                    </div>
+                </nav>
+            </header>
+            <main>
+                <nav>
+                    <div class="button-group">
+                        <button>By due date</button>
+                        <button>By created date</button>
+                        <button>By importance</button>
+                    </div>
+                    <div class="button-group">
+                        <button>Show finished notes</button>
+                    </div>
+                </nav>
+                <section>
+                    <ul>
+                        <li>
+                            <div class="note-container">
+                                <div class="note-due-date">Nächsten Mittwoch</div>
+                                <div class="note-title">
+                                    <h2>CAS FEE Selbststudium / Projekt Aufgabe erledigen</h2>
+                                </div>
+                                <div class="note-importance">
+                                    <span class="importance-1">Importance</span>
+                                    <span class="importance-2">Importance</span>
+                                    <span class="importance-3">Importance</span>
+                                </div>
+                                <div class="note-due-state">
+                                    <input id="noteFinished" type="checkbox" /><label for="noteFinished">Finished<span>[today]</span></label>
+                                </div>
+                                <div class="note-description">
+                                    <div>
+                                        HMTML für die Note App erstellen.<br />
+                                        CSS für die Note App erstellen. [...]
+                                    </div>
+                                    <button>Extend</button>
+                                </div>
+                                <div class="note-actions">
+                                    <form>
+                                        <button type="submit" formaction="./note.html">Edit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+            <footer>
+                <div>
+                    Created by Samuel Abächerli
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>
