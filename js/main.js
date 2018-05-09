@@ -10,12 +10,8 @@
  */
 let Notes_Main = (function () {
 
-    function log(message) {
-        if ( typeof message === 'string' ) {
-            console.log('Notes_Main: ' + message);
-        } else {
-            console.error('Notes_Main: log(): Wrong message type!');
-        }
+    function log(level, functionName, message) {
+        Notes_Logging.log(level, 'Notes_Main', functionName + '(): ' + message);
     }
     
     function setStyle(style) {
@@ -26,20 +22,21 @@ let Notes_Main = (function () {
             if ( !STYLES.includes(STYLE_VALUE) ) { throw 'not supported' }
         }
         catch (e) {
-            log('setStyle(): Parameter is ' + e + '!');
+            log('error', 'setStyle', 'Parameter is ' + e + '!');
         }
-        const BODY_ELEMENT = document.getElementsByTagName('body')[0];
+        const SELECTION_STATEMENT = 'body';
         const CLASS_NAME = 'app-colored';
         if ( STYLE_VALUE === 'black-white' ) {
-            BODY_ELEMENT.classList.remove(CLASS_NAME);
+            Notes_Core.removeClass(SELECTION_STATEMENT, CLASS_NAME);
         } else if ( STYLE_VALUE === 'colored' ) {
-            BODY_ELEMENT.classList.add(CLASS_NAME);
+            Notes_Core.addClass(SELECTION_STATEMENT, CLASS_NAME);
         }
     }
 
     function showNotesList() {
-        document.getElementById('edit-notes').classList.add('hidden');
-        document.getElementById('view-notes').classList.remove('hidden');
+        const CLASS_NAME = 'hidden';
+        Notes_Core.addClass('#edit-notes', CLASS_NAME);
+        Notes_Core.removeClass('#view-notes', CLASS_NAME);
     }
     
     function editNote(id) {
@@ -49,20 +46,21 @@ let Notes_Main = (function () {
             if ( isNaN(id) ) { throw 'not a number' }
         }
         catch (e) {
-            log('editNote(): Parameter is ' + e + '!');
+            log('error', 'editNote', 'Parameter is ' + e + '!');
         }
-        document.getElementById('view-notes').classList.add('hidden');
-        document.getElementById('edit-notes').classList.remove('hidden');
+        const CLASS_NAME = 'hidden';
+        Notes_Core.addClass('#view-notes', CLASS_NAME);
+        Notes_Core.removeClass('#edit-notes', CLASS_NAME);
     }
 
     return {
-        log: log,
         setStyle: setStyle,
         showNotesList: showNotesList,
         editNote: editNote
     }
 
 })();
+
 
 /**
  * Main_initialize()
@@ -71,5 +69,5 @@ let Notes_Main = (function () {
  */
 (function Main_initialize() {
     /* TODO: remove unnecessary logging */
-    Notes_Main.log('Application initialized');
+    console.info('Notes_Main: Application initialized');
 })();
