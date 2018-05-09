@@ -139,6 +139,10 @@ nav {
     justify-content: space-between;
 }
 
+nav + nav {
+    margin-top: var(--app-clearance);
+}
+
 
 /**************************************
  * Content
@@ -147,10 +151,6 @@ nav {
 .page-container > main {
     grid-area: main;
     overflow-y: auto;
-}
-
-header + main > nav {
-    padding-top: var(--app-clearance);
 }
 
 
