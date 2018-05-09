@@ -20,6 +20,14 @@ body {
     --color-grey: #555;
     --color-lightgrey: #d0d0d0;
 
+    /* colors for colored style */
+    --color-background: #86bbd8;
+    --color-accent: #134074;
+    --color-heading: #da9100;
+    --color-text: #362417;
+    --color-error: #990000;
+
+
     /* borders */
     --border-primary: solid 1px var(--color-primary);
     --border-secondary: solid 1px var(--color-grey);
@@ -41,6 +49,11 @@ body {
     margin: 0;
 }
 
+.app-colored {
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
 h1,
 h2,
 h3,
@@ -52,12 +65,29 @@ h6 {
     color: #000;
 }
 
+.app-colored h1,
+.app-colored h2,
+.app-colored h3,
+.app-colored h4,
+.app-colored h5,
+.app-colored h6 {
+    color: var(--color-heading);
+}
+
 button,
 select {
     color: var(--color-grey);
     background-color: var(--color-secondary);
     border: solid 1px var(--color-grey);
 }
+
+.app-colored button,
+.app-colored select {
+    color: var(--color-accent);
+    background-color: var(--color-background);
+    border-color: var(--color-accent);
+}
+
 
 button + button {
     margin-left: 0.3rem;
@@ -89,9 +119,14 @@ button + button {
 }
 
 header > h1 {
-    margin: 0.67em calc( -1 * var(--app-clearance) );
-    padding: 0 var(--app-clearance) var(--app-clearance) 0.67em;
+    margin: 0 calc( -1 * var(--app-clearance) ) 0.67em calc( -1 * var(--app-clearance) );
+    padding: 0.67em var(--app-clearance);
     border-bottom: var(--border-primary);
+}
+
+.app-colored header > h1 {
+    background-color: var(--color-accent);
+    border-bottom-color: transparent;
 }
 
 
@@ -136,6 +171,10 @@ header + main > nav {
     border-top: var(--border-secondary);
 }
 
+.app-colored .notes-list > li + li {
+    border-top-color: var(--color-accent);
+}
+
 .note-container {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -165,12 +204,20 @@ header + main > nav {
     margin: 0;
 }
 
+.app-colored .note-title {
+    color: var(--color-text);
+}
+
 .note-importance > .not-set {
     color: #d3d3d3;
 }
 
 .note-container > .note-due-state {
     grid-area: due-state;
+}
+
+.note-due-state > * {
+    vertical-align: middle;
 }
 
 .note-due-state > input + label {
@@ -228,10 +275,22 @@ header + main > nav {
 .form-group > input,
 .form-group > textarea {
     grid-area: input;
+    color: var(--color-grey);
+}
+
+.app-colored .form-group > input,
+.app-colored .form-group > textarea {
+    color: var(--color-text);
+    background-color: var(--color-background);
+    border: solid 1px var(--color-accent);
 }
 
 .form-group > .error-message {
     grid-area: error-message;
+}
+
+.app-colored .form-group > .error-message {
+    color: var(--color-error);
 }
 
 .form-group > .error-message::before {
@@ -246,7 +305,7 @@ header + main > nav {
     margin-top: var(--app-clearance);
 }
 
-form:invalid > button[type=submit] {
+form:invalid > .form-actions > button[type=submit] {
     /* TODO: set style for diabled save button */
 }
 
@@ -260,4 +319,10 @@ form:invalid > button[type=submit] {
     margin: 0 calc( -1 * var(--app-clearance) );
     padding: var(--half-app-clearance) var(--app-clearance);
     border-top: var(--border-primary);
+}
+
+.app-colored footer {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    border-top-color: transparent;
 }
