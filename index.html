@@ -84,13 +84,15 @@
                         <div class="error-message">Description missing</div>
                     </div>
                     <div class="form-group">
-                        <label>Importance</label>
-                        <!-- TODO: use lightning symbol as radio button for input -->
-                        <input id="very-low-importance" type="radio" value="1"/><label for="very-low-importance"><i class="fas fa-bolt fa-fw" aria-label="Very low importance"></i></label>
-                        <input id="low-importance" type="radio" value="2" /><label for="low-importance"><i class="fas fa-bolt fa-fw" aria-label="Low importance"></i></label>
-                        <input id="normal-importance" type="radio" value="3" /><label for="normal-importance"><i class="fas fa-bolt fa-fw" aria-label="Normal importance"></i></label>
-                        <input id="high-importance" type="radio" value="4" /><label for="high-importance"><i class="fas fa-bolt fa-fw not-set" aria-label="High importance"></i></label>
-                        <input id="very-high-importance" type="radio" value="5" /><label for="very-high-importance"><i class="fas fa-bolt fa-fw not-set" aria-label="Very high importance"></i></label>
+                        <label for="note-importance">Importance</label>
+                        <div id="note-importance">
+                            <!-- TODO: use lightning symbol as radio button for input -->
+                            <input id="very-low-importance" name="note-importance" type="radio" value="1"/><label for="very-low-importance"><i class="fas fa-bolt fa-fw" aria-label="Very low importance"></i></label>
+                            <input id="low-importance" name="note-importance" type="radio" value="2" /><label for="low-importance"><i class="fas fa-bolt fa-fw" aria-label="Low importance"></i></label>
+                            <input id="normal-importance" name="note-importance" type="radio" value="3" checked="checked"/><label for="normal-importance"><i class="fas fa-bolt fa-fw" aria-label="Normal importance"></i></label>
+                            <input id="high-importance" name="note-importance" type="radio" value="4" /><label for="high-importance"><i class="fas fa-bolt fa-fw not-set" aria-label="High importance"></i></label>
+                            <input id="very-high-importance" name="note-importance" type="radio" value="5" /><label for="very-high-importance"><i class="fas fa-bolt fa-fw not-set" aria-label="Very high importance"></i></label>
+                        </div>
                         <div class="error-message">Please set an importance</div>
                     </div>
                     <div class="form-group">

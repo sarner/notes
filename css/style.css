@@ -212,7 +212,7 @@ nav + nav {
 }
 
 .note-importance > .not-set {
-    color: #d3d3d3;
+    color: var(--color-lightgrey);
 }
 
 .note-container > .note-due-state {
@@ -298,6 +298,27 @@ nav + nav {
 
 .form-group > .error-message::before {
     content: 'Error: '
+}
+
+#note-importance > input[type=radio] {
+    position: absolute;
+    visibility: hidden;
+}
+
+#note-importance > input[type=radio] + label {
+    cursor: pointer;
+}
+
+#note-importance > input[type=radio]:checked ~ label {
+    color: var(--color-lightgrey);
+}
+
+#note-importance > input[type=radio]:checked + label {
+    color: var(--color-grey);
+}
+
+.app-colored #note-importance > input[type=radio]:checked + label {
+    color: var(--color-text);
 }
 
 .form-group + .form-group {
