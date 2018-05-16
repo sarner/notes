@@ -2,6 +2,9 @@
  * Data handling module
  **************************************/
 
+'use strict';
+
+
 /**
  * Notes_DataHandling
  *

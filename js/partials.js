@@ -2,6 +2,9 @@
  * Partials module
  **************************************/
 
+'use strict';
+
+
 /**
  * Notes_partials
  *

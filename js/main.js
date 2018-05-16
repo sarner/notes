@@ -2,6 +2,9 @@
  * Main module
  **************************************/
 
+'use strict';
+
+
 /**
  * Notes_main
  *

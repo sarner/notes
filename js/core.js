@@ -2,6 +2,9 @@
  * Core module
  **************************************/
 
+'use strict';
+
+
 /**
  * Notes_core
  *

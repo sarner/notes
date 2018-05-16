@@ -2,6 +2,9 @@
  * Logging module
  **************************************/
 
+'use strict';
+
+
 /**
  * Notes_logging
  *
