@@ -16,7 +16,7 @@ let Notes_Core = (function () {
 
     function createNoteList() {
         const notes = {
-            notes: Notes_DataHandling.load('notes')
+            notes: Notes_DataHandling.loadAll('notes')
         };
         const notesList = document.getElementById('notes-list-template').innerHTML;
         const template = Handlebars.compile(notesList);
@@ -25,9 +25,7 @@ let Notes_Core = (function () {
 
     function getElements(selectionStatement) {
         try {
-            if ( selectionStatement === '' ) {
-                throw 'empty'
-            }
+            if ( selectionStatement === '' ) { throw 'empty' }
         }
         catch (e) {
             log('error', 'getElements', 'Parameter is ' + e + '!');
@@ -38,9 +36,7 @@ let Notes_Core = (function () {
 
     function createElement(tagName) {
         try {
-            if ( tagName === '' ) {
-                throw 'empty'
-            }
+            if ( tagName === '' ) { throw 'empty' }
         }
         catch (e) {
             log('error', 'createElement', 'Parameter is ' + e + '!');
@@ -51,9 +47,7 @@ let Notes_Core = (function () {
 
     function addClass(selectionStatement, className) {
         try {
-            if (selectionStatement === '' || className === '') {
-                throw 'empty'
-            }
+            if (selectionStatement === '' || className === '') { throw 'empty' }
         }
         catch (e) {
             log('error', 'addClass', 'Parameters are ' + e + '!');
@@ -67,9 +61,7 @@ let Notes_Core = (function () {
 
     function removeClass(selectionStatement, className) {
         try {
-            if (selectionStatement === '' || className === '') {
-                throw 'empty'
-            }
+            if (selectionStatement === '' || className === '') { throw 'empty' }
         }
         catch (e) {
             log('error', 'removeClass', 'Parameters are ' + e + '!');

@@ -19,7 +19,7 @@ let Notes_DataHandling = (function () {
         localStorage.removeItem(key);
     }
 
-    function loadObject(key) {
+    function loadAllObjects(key) {
         if (localStorage.getItem(key) !== null) {
             return JSON.parse(localStorage.getItem(key));
         } else {
@@ -30,7 +30,7 @@ let Notes_DataHandling = (function () {
     return {
         save: saveObject,
         delete: deleteObject,
-        load: loadObject
+        loadAll: loadAllObjects
     };
 
 })();

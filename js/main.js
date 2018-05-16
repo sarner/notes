@@ -67,17 +67,16 @@ let Notes_Main = (function () {
         goToPage('edit-notes');
     }
     
-    function editNote(id) {
+    function editNote(date) {
         try {
-            id = parseInt(id);
-            if ( id === '' ) { throw 'empty' }
-            if ( isNaN(id) ) { throw 'not a number' }
+            if ( date === '' ) { throw 'empty' }
+            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
         }
         catch (e) {
             log('error', 'editNote', 'Parameter is ' + e + '!');
         }
+        Notes_DataHandling.loadAll(id);
         goToPage('edit-notes');
-        Notes_DataHandling.load(id);
         /* TODO: visualize data in form */
     }
 
@@ -88,7 +87,7 @@ let Notes_Main = (function () {
             importance: Notes_Core.getElements('#note-importance>input:checked')[0].value,
             dueDate: Notes_Core.getElements('#note-due-date')[0].value
         };
-        let notes = Notes_DataHandling.load('notes');
+        let notes = Notes_DataHandling.loadAll('notes');
         notes.push(note);
         Notes_DataHandling.save('notes', notes);
     }

@@ -31,7 +31,7 @@ Handlebars.registerPartial(
                 <button type="button"><i class="fas fa-angle-down"></i></button>
             </div>
             <div class="note-actions">
-                <button onclick="Notes_Main.editNote({{id}})">Edit</button>
+                <button onclick="Notes_Main.editNote({{creationDate}})">Edit</button>
             </div>
         </div>
     </li>`
