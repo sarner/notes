@@ -14,6 +14,41 @@ let Notes_Core = (function () {
         Notes_Logging.log(level, 'Notes_Core', functionName + '(): ' + message);
     }
 
+    function createNoteList() {
+        const notes = {
+            notes: Notes_DataHandling.load('notes')
+        };
+        const notesList = document.getElementById('notes-list-template').innerHTML;
+        const template = Handlebars.compile(notesList);
+        return template(notes);
+    }
+
+    function getElements(selectionStatement) {
+        try {
+            if ( selectionStatement === '' ) {
+                throw 'empty'
+            }
+        }
+        catch (e) {
+            log('error', 'getElements', 'Parameter is ' + e + '!');
+        }
+
+        return document.querySelectorAll(selectionStatement);
+    }
+
+    function createElement(tagName) {
+        try {
+            if ( tagName === '' ) {
+                throw 'empty'
+            }
+        }
+        catch (e) {
+            log('error', 'createElement', 'Parameter is ' + e + '!');
+        }
+
+        return document.createElement(tagName);
+    }
+
     function addClass(selectionStatement, className) {
         try {
             if (selectionStatement === '' || className === '') {
@@ -48,6 +83,9 @@ let Notes_Core = (function () {
 
 
     return {
+        createNoteList: createNoteList,
+        getElements: getElements,
+        createElement: createElement,
         addClass: addClass,
         removeClass: removeClass
     };

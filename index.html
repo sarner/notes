@@ -17,7 +17,7 @@
             <main id="view-notes">
                 <nav>
                     <div class="button-group">
-                        <button type="button">Create new note</button>
+                        <button type="button" onclick="Notes_Main.newNote()">Create new note</button>
                     </div>
                     <div>
                         <label for="style-selector">Choose style:</label>
@@ -37,7 +37,7 @@
                         <button type="button">Show finished notes</button>
                     </div>
                 </nav>
-                <section>
+                <section id="notes-list">
                     <ul class="notes-list">
                         <li>
                             <div class="note-container">
@@ -74,8 +74,8 @@
             <main id="edit-notes" class="hidden">
                 <form>
                     <div class="form-group">
-                        <label for="note-titel">Title</label>
-                        <input id="note-titel" name="note-titel" type="text" placeholder="Title" required/>
+                        <label for="note-title">Title</label>
+                        <input id="note-title" name="note-title" type="text" placeholder="Title" required/>
                         <div class="error-message">Title missing</div>
                     </div>
                     <div class="form-group">
@@ -102,7 +102,7 @@
                     </div>
                     <div class="form-actions">
                         <!-- TODO: disable save button when form invalid or empty -->
-                        <button type="submit">Save</button>
+                        <button type="submit" onclick="Notes_Main.saveNote()">Save</button>
                         <button type="reset">Cancel</button>
                         <button type="reset" onclick="Notes_Main.showNotesList()">Back</button>
                     </div>
@@ -114,8 +114,16 @@
                 </div>
             </footer>
         </div>
-    <script src="./js/logging.js"></script>
-    <script src="./js/core.js"></script>
-    <script src="./js/main.js"></script>
+        <script id="notes-list-template" type="text/x-handlebars-template">
+            {{#each notes}}
+            {{> noteListItem }}
+            {{/each}}
+        </script>
+        <script src="./js/handlebars.js"></script>
+        <script src="./js/partials.js"></script>
+        <script src="./js/logging.js"></script>
+        <script src="./js/data-handling.js"></script>
+        <script src="./js/core.js"></script>
+        <script src="./js/main.js"></script>
     </body>
 </html>
