@@ -304,6 +304,7 @@ nav + nav {
 .form-group > textarea {
     grid-area: input;
     color: var(--color-grey);
+    border: solid 1px var(--color-grey);
 }
 
 .app-colored .form-group > input,
