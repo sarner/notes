@@ -314,6 +314,16 @@ nav + nav {
     border: solid 1px var(--color-accent);
 }
 
+.form-group > input:focus,
+.form-group > textarea:focus {
+    outline-color: var(--color-grey);
+}
+
+.app-colored .form-group > input:focus,
+.app-colored .form-group > textarea:focus {
+    outline-color: var(--color-heading);
+}
+
 .form-group > .error-message {
     grid-area: error-message;
     visibility: hidden;
