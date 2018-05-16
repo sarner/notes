@@ -17,13 +17,32 @@ let Notes_Core = (function () {
         Notes_Logging.log(level, 'Notes_Core', functionName + '(): ' + message);
     }
 
+    function getTwoDigitsNumber(number) {
+        return ('0' + number).slice(-2);
+    }
+
+    function toFormattedDateString(date) {
+        try {
+            if ( date === '' ) { throw 'empty' }
+            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
+        }
+        catch (e) {
+            log('error', 'getDateString', 'Parameter is ' + e + '!');
+        }
+        const year = date.getFullYear();
+        const month = getTwoDigitsNumber(date.getMonth());
+        const day = getTwoDigitsNumber(date.getDate());
+        return [year, month, day].join('-');
+    }
+
     function createNoteList() {
-        const notes = {
+        const context = {
+            date: new Date(),
             notes: Notes_DataHandling.loadAll('notes')
         };
         const notesList = document.getElementById('notes-list-template').innerHTML;
         const template = Handlebars.compile(notesList);
-        return template(notes);
+        return template(context);
     }
 
     function getElements(selectionStatement) {
@@ -78,6 +97,7 @@ let Notes_Core = (function () {
 
 
     return {
+        toFormattedDateString: toFormattedDateString,
         createNoteList: createNoteList,
         getElements: getElements,
         createElement: createElement,

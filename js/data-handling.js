@@ -24,7 +24,11 @@ let Notes_DataHandling = (function () {
         if ( storedItem === null ) {
             objects.push(item);
         } else {
-            objects = objects.filter( (object) => { object.creationDate === item.creationDate ? item : object } );
+            for ( let i = 0; i < objects.length; i++ ) {
+                if (objects[i].creationDate === item.creationDate) {
+                    objects[i] = item;
+                }
+            }
         }
         localStorage.setItem(key, JSON.stringify(objects));
     }

@@ -15,19 +15,19 @@ Handlebars.registerPartial(
     'noteListItem',
     `<li>
         <div class="note-container">
-            <div class="note-due-date">{{dueDate}}</div>
+            <div class="note-due-date">{{localeDateString dueDate}}</div>
             <div class="note-header">
                 <div class="note-title">{{title}}</div>
                 <div class="note-importance">
-                    <i class="fas fa-bolt fa-fw" aria-label="Very low importance"></i>
-                    <i class="fas fa-bolt fa-fw" aria-label="Low importance"></i>
-                    <i class="fas fa-bolt fa-fw" aria-label="Normal importance"></i>
-                    <i class="fas fa-bolt fa-fw not-set" aria-label="High importance"></i>
-                    <i class="fas fa-bolt fa-fw not-set" aria-label="Very high importance"></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '1')}}not-set{{/if}}" aria-label="Very low importance"></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '2')}}not-set{{/if}}" aria-label="Low importance"></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '3')}}not-set{{/if}}" aria-label="Normal importance"></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '4')}}not-set{{/if}}" aria-label="High importance"></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '5')}}not-set{{/if}}" aria-label="Very high importance"></i>
                 </div>
             </div>
             <div class="note-due-state">
-                <input id="note-finished" type="checkbox" /><label for="note-finished">Finished<span> [today]</span></label>
+                <input id="note-finished-{{@index}}" type="checkbox"  onchange="Notes_Main.changeNoteState('{{creationDate}}', this.id)" {{#if done}} checked {{/if}} /><label for="note-finished">Finished {{#if (sameDate completionDate date)}}<span>[today]</span>{{/if}}</label>
             </div>
             <div class="note-description">
                 <div>{{description}}</div>

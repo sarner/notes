@@ -93,16 +93,36 @@ let Notes_Main = (function () {
         /* TODO: visualize data in form */
     }
 
+    function changeNoteState(date, id) {
+        try {
+            if ( date === '' ) { throw 'empty' }
+            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
+        }
+        catch (e) {
+            log('error', 'editNote', 'Parameter is ' + e + '!');
+        }
+        let item = Notes_DataHandling.loadItem('notes', date);
+        item.done = Notes_Core.getElements('#' + id)[0].checked;
+        if ( item.done ) {
+            item.completionDate = (new Date()).toISOString();
+        } else {
+            item.completionDate = null;
+        }
+        Notes_DataHandling.save('notes', item);
+        showNotesList();
+    }
+
     function saveNote() {
         const note = {
-            creationDate: Notes_Core.getElements('#note-creation-date')[0].value ? Notes_Core.getElements('#note-creation-date')[0].value : new Date().toISOString(),
+            creationDate: Notes_Core.getElements('#note-creation-date')[0].value ? Notes_Core.getElements('#note-creation-date')[0].value : (new Date()).toISOString(),
             title: Notes_Core.getElements('#note-title')[0].value,
             description: Notes_Core.getElements('#note-description')[0].value,
             importance: Notes_Core.getElements('#note-importance>input:checked')[0].value,
             dueDate: Notes_Core.getElements('#note-due-date')[0].value,
-            state: Notes_Core.getElements('#note-state')[0].value
+            done: Notes_Core.getElements('#note-state')[0].checked
         };
         Notes_DataHandling.save('notes', note);
+        showNotesList();
     }
 
     return {
@@ -110,6 +130,7 @@ let Notes_Main = (function () {
         showNotesList: showNotesList,
         newNote: newNote,
         editNote: editNote,
+        changeNoteState: changeNoteState,
         saveNote: saveNote
     }
 
