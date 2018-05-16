@@ -19,11 +19,11 @@ Handlebars.registerPartial(
             <div class="note-header">
                 <div class="note-title">{{title}}</div>
                 <div class="note-importance">
-                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '1')}}not-set{{/if}}" aria-label="Very low importance"></i>
-                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '2')}}not-set{{/if}}" aria-label="Low importance"></i>
-                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '3')}}not-set{{/if}}" aria-label="Normal importance"></i>
-                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '4')}}not-set{{/if}}" aria-label="High importance"></i>
-                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '5')}}not-set{{/if}}" aria-label="Very high importance"></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '1')}}not-set{{/if}}" {{#if (ifExpr importance '===' '1')}}aria-label="Very low importance"{{/if}}></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '2')}}not-set{{/if}}" {{#if (ifExpr importance '===' '2')}}aria-label="Low importance"{{/if}}></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '3')}}not-set{{/if}}" {{#if (ifExpr importance '===' '3')}}aria-label="Normal importance"{{/if}}></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '4')}}not-set{{/if}}" {{#if (ifExpr importance '===' '4')}}aria-label="High importance"{{/if}}></i>
+                    <i class="fas fa-bolt fa-fw {{#if (ifExpr importance '<' '5')}}not-set{{/if}}" {{#if (ifExpr importance '===' '5')}}aria-label="Very high importance"{{/if}}></i>
                 </div>
             </div>
             <div class="note-due-state">
