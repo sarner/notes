@@ -166,6 +166,26 @@ nav + nav {
     text-align: center;
 }
 
+.notes-count {
+    position: absolute;
+    top: 1rem;
+    right: var(--app-clearance);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
+    background-color: var(--color-primary);
+    font-size: 1.2em;
+    color: var(--color-secondary);
+    border-radius: 50%;
+}
+
+.app-colored .notes-count {
+    background-color: var(--color-heading);
+    color: initial;
+}
+
 .notes-list {
     list-style: none;
     padding: 0;

@@ -64,10 +64,13 @@ let Notes_Main = (function () {
         if ( element.childElementCount !== 0 ) {
             parentElement.innerHTML = '';
             parentElement.appendChild(element);
+            Notes_Core.getElements('.notes-count')[0].innerHTML = '#' + element.childElementCount;
             Notes_Core.addClass('.no-notes', 'hidden');
+            Notes_Core.removeClass('.notes-count', 'hidden');
             Notes_Core.removeClass('#notes-interaction', 'hidden');
         } else {
             Notes_Core.addClass('#notes-interaction', 'hidden');
+            Notes_Core.addClass('.notes-count', 'hidden');
             Notes_Core.removeClass('.no-notes', 'hidden');
         }
         goToPage('view-notes');
