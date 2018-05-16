@@ -316,6 +316,17 @@ nav + nav {
 
 .form-group > .error-message {
     grid-area: error-message;
+    visibility: hidden;
+}
+
+.form-group > input:invalid + .error-message,
+.form-group > textarea:invalid + .error-message {
+    visibility: visible;
+}
+
+.app-colored .form-group > input:invalid,
+.app-colored .form-group > textarea:invalid {
+    border-color: var(--color-error);
 }
 
 .app-colored .form-group > .error-message {
