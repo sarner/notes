@@ -34,7 +34,7 @@ let Notes_DataHandling = (function () {
                 }
             }
         }
-        saveAllObjects(objects);
+        saveAllObjects(key, objects);
     }
 
     function deleteAllObjects(key) {
