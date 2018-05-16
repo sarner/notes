@@ -108,7 +108,7 @@ let Notes_Main = (function () {
         } else {
             item.completionDate = null;
         }
-        Notes_DataHandling.save('notes', item);
+        Notes_DataHandling.saveItem('notes', item);
         showNotesList();
     }
 
@@ -121,7 +121,19 @@ let Notes_Main = (function () {
             dueDate: Notes_Core.getElements('#note-due-date')[0].value,
             done: Notes_Core.getElements('#note-state')[0].checked
         };
-        Notes_DataHandling.save('notes', note);
+        Notes_DataHandling.saveItem('notes', note);
+        showNotesList();
+    }
+
+    function deleteNote(date) {
+        try {
+            if ( date === '' ) { throw 'empty' }
+            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
+        }
+        catch (e) {
+            log('error', 'editNote', 'Parameter is ' + e + '!');
+        }
+        Notes_DataHandling.deleteItem('notes', date);
         showNotesList();
     }
 
@@ -131,7 +143,8 @@ let Notes_Main = (function () {
         newNote: newNote,
         editNote: editNote,
         changeNoteState: changeNoteState,
-        saveNote: saveNote
+        saveNote: saveNote,
+        deleteNote: deleteNote
     }
 
 })();

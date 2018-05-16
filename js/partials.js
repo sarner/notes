@@ -35,6 +35,7 @@ Handlebars.registerPartial(
             </div>
             <div class="note-actions">
                 <button onclick="Notes_Main.editNote('{{creationDate}}')">Edit</button>
+                <button onclick="Notes_Main.deleteNote('{{creationDate}}')">Delete</button>
             </div>
         </div>
     </li>`

@@ -27,7 +27,7 @@ let Notes_Core = (function () {
             if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
         }
         catch (e) {
-            log('error', 'getDateString', 'Parameter is ' + e + '!');
+            log('error', 'toFormattedDateString', 'Parameter is ' + e + '!');
         }
         const year = date.getFullYear();
         const month = getTwoDigitsNumber(date.getMonth());

@@ -279,6 +279,16 @@ nav + nav {
     grid-area: action;
 }
 
+.note-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.note-actions > button + button {
+    margin: 0;
+}
+
 
 /**************************************
  * Notes form

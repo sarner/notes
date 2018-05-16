@@ -18,7 +18,11 @@ let Notes_DataHandling = (function () {
         Notes_Logging.log(level, 'Notes_DataHandling', functionName + '(): ' + message);
     }
 
-    function saveObject(key, item) {
+    function saveAllObjects(key, objects) {
+        localStorage.setItem(key, JSON.stringify(objects));
+    }
+
+    function saveItem(key, item) {
         let objects = loadAllObjects(key);
         const storedItem = loadItem(key, item.creationDate);
         if ( storedItem === null ) {
@@ -30,11 +34,17 @@ let Notes_DataHandling = (function () {
                 }
             }
         }
-        localStorage.setItem(key, JSON.stringify(objects));
+        saveAllObjects(objects);
     }
 
-    function deleteObject(key) {
+    function deleteAllObjects(key) {
         localStorage.removeItem(key);
+    }
+
+    function deleteItem(key, date) {
+        const objects = loadAllObjects(key);
+        const results = objects.filter( (item) => { return item.creationDate !== date } );
+        saveAllObjects(key, results);
     }
 
     function loadAllObjects(key) {
@@ -60,8 +70,10 @@ let Notes_DataHandling = (function () {
     }
 
     return {
-        save: saveObject,
-        delete: deleteObject,
+        saveAll: saveAllObjects,
+        saveItem: saveItem,
+        deleteAll: deleteAllObjects,
+        deleteItem: deleteItem,
         loadAll: loadAllObjects,
         loadItem: loadItem
     };

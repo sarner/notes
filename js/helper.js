@@ -47,6 +47,9 @@ Handlebars.registerHelper('ifExpr', function (value1, operator, value2) {
 });
 
 Handlebars.registerHelper('sameDate', function (date1, date2) {
+    if ( date1 === null || date2 === null || typeof date1 === 'undefined' || typeof date2 === 'undefined' ) {
+        return false;
+    }
     const date1String = Notes_Core.toFormattedDateString(new Date(date1));
     const date2String = Notes_Core.toFormattedDateString(new Date(date2));
     return date1String === date2String;
