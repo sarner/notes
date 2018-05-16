@@ -27,7 +27,7 @@
                         </select>
                     </div>
                 </nav>
-                <nav>
+                <nav id="notes-interaction">
                     <div class="button-group">
                         <button type="button">By due date</button>
                         <button type="button">By created date</button>
@@ -38,37 +38,7 @@
                     </div>
                 </nav>
                 <section id="notes-list">
-                    <ul class="notes-list">
-                        <li>
-                            <div class="note-container">
-                                <div class="note-due-date">Nächsten Mittwoch</div>
-                                <div class="note-header">
-                                    <div class="note-title">CAS FEE Selbststudium / Projekt Aufgabe erledigen</div>
-                                    <div class="note-importance">
-                                        <i class="fas fa-bolt fa-fw" aria-label="Very low importance"></i>
-                                        <i class="fas fa-bolt fa-fw" aria-label="Low importance"></i>
-                                        <i class="fas fa-bolt fa-fw" aria-label="Normal importance"></i>
-                                        <i class="fas fa-bolt fa-fw not-set" aria-label="High importance"></i>
-                                        <i class="fas fa-bolt fa-fw not-set" aria-label="Very high importance"></i>
-                                    </div>
-                                </div>
-                                <div class="note-due-state">
-                                    <input id="note-finished" type="checkbox" /><label for="note-finished">Finished<span> [today]</span></label>
-                                </div>
-                                <div class="note-description">
-                                    <div>
-                                        HMTML für die Note App erstellen.<br />
-                                        CSS für die Note App erstellen.<br />
-                                        und vieles mehr
-                                    </div>
-                                    <button type="button"><i class="fas fa-angle-down"></i></button>
-                                </div>
-                                <div class="note-actions">
-                                    <button onclick="Notes_Main.editNote(1)">Edit</button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    <div class="no-notes">No notes determined</div>
                 </section>
             </main>
             <main id="edit-notes" class="hidden">
@@ -80,13 +50,12 @@
                     </div>
                     <div class="form-group">
                         <label for="note-description">Description</label>
-                        <textarea id="note-description" name="note-description"  placeholder="Description" required></textarea>
+                        <textarea id="note-description" name="note-description"  placeholder="Description" rows="3" required></textarea>
                         <div class="error-message">Description missing</div>
                     </div>
                     <div class="form-group">
                         <label for="note-importance">Importance</label>
                         <div id="note-importance">
-                            <!-- TODO: use lightning symbol as radio button for input -->
                             <input id="very-low-importance" name="note-importance" type="radio" value="1"/><label for="very-low-importance"><i class="fas fa-bolt fa-fw" aria-label="Very low importance"></i></label>
                             <input id="low-importance" name="note-importance" type="radio" value="2" /><label for="low-importance"><i class="fas fa-bolt fa-fw" aria-label="Low importance"></i></label>
                             <input id="normal-importance" name="note-importance" type="radio" value="3" checked="checked"/><label for="normal-importance"><i class="fas fa-bolt fa-fw" aria-label="Normal importance"></i></label>
@@ -100,6 +69,8 @@
                         <input id="note-due-date" name="note-due-date" type="date" required/>
                         <div  class="error-message">Please select a date</div>
                     </div>
+                    <input id="note-state" name="note-state" type="checkbox" hidden />
+                    <input id="note-creation-date" name="note-creation-date" type="datetime-local" hidden />
                     <div class="form-actions">
                         <!-- TODO: disable save button when form invalid or empty -->
                         <button type="submit" onclick="Notes_Main.saveNote()">Save</button>

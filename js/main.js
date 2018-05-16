@@ -51,15 +51,22 @@ let Notes_Main = (function () {
         const listElement = Notes_Core.createElement('ul');
         listElement.classList.add('notes-list');
         listElement.innerHTML = html;
-        console.log(listElement);
         return listElement;
     }
 
     function showNotesList() {
         const html = Notes_Core.createNoteList();
         const element = html2list(html);
-        Notes_Core.getElements('#notes-list')[0].innerHTML = '';
-        Notes_Core.getElements('#notes-list')[0].appendChild(element);
+        const parentElement = Notes_Core.getElements('#notes-list')[0];
+        if ( element.childElementCount !== 0 ) {
+            parentElement.innerHTML = '';
+            parentElement.appendChild(element);
+            Notes_Core.addClass('.no-notes', 'hidden');
+            Notes_Core.removeClass('#notes-interaction', 'hidden');
+        } else {
+            Notes_Core.addClass('#notes-interaction', 'hidden');
+            Notes_Core.removeClass('.no-notes', 'hidden');
+        }
         goToPage('view-notes');
     }
 
@@ -75,21 +82,21 @@ let Notes_Main = (function () {
         catch (e) {
             log('error', 'editNote', 'Parameter is ' + e + '!');
         }
-        Notes_DataHandling.loadAll(id);
+        Notes_DataHandling.loadItem('notes', date);
         goToPage('edit-notes');
         /* TODO: visualize data in form */
     }
 
     function saveNote() {
         const note = {
+            creationDate: Notes_Core.getElements('#note-creation-date')[0].value ? Notes_Core.getElements('#note-creation-date')[0].value : new Date().toISOString(),
             title: Notes_Core.getElements('#note-title')[0].value,
             description: Notes_Core.getElements('#note-description')[0].value,
             importance: Notes_Core.getElements('#note-importance>input:checked')[0].value,
-            dueDate: Notes_Core.getElements('#note-due-date')[0].value
+            dueDate: Notes_Core.getElements('#note-due-date')[0].value,
+            state: Notes_Core.getElements('#note-state')[0].value
         };
-        let notes = Notes_DataHandling.loadAll('notes');
-        notes.push(note);
-        Notes_DataHandling.save('notes', notes);
+        Notes_DataHandling.save('notes', note);
     }
 
     return {

@@ -161,6 +161,11 @@ nav + nav {
  * Notes list
  **************************************/
 
+.no-notes {
+    margin-top: var(--app-clearance);
+    text-align: center;
+}
+
 .notes-list {
     list-style: none;
     padding: 0;
