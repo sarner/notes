@@ -218,11 +218,8 @@ nav + nav {
     grid-area: due-date;
 }
 
-.note-container > .note-title {
+.note-container > .note-header {
     grid-area: title;
-}
-
-.note-header {
     display: flex;
     justify-content: space-between;
 }

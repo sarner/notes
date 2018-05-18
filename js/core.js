@@ -35,13 +35,9 @@ let Notes_Core = (function () {
         return [year, month, day].join('-');
     }
 
-    function createNoteList() {
-        const context = {
-            date: new Date(),
-            notes: Notes_DataHandling.loadAll('notes')
-        };
-        const notesList = document.getElementById('notes-list-template').innerHTML;
-        const template = Handlebars.compile(notesList);
+    function compileTemplate(templateID, context) {
+        const templateScript = getElements('#' + templateID)[0].innerHTML;
+        const template = Handlebars.compile(templateScript);
         return template(context);
     }
 
@@ -54,17 +50,6 @@ let Notes_Core = (function () {
         }
 
         return document.querySelectorAll(selectionStatement);
-    }
-
-    function createElement(tagName) {
-        try {
-            if ( tagName === '' ) { throw 'empty' }
-        }
-        catch (e) {
-            log('error', 'createElement', 'Parameter is ' + e + '!');
-        }
-
-        return document.createElement(tagName);
     }
 
     function addClass(selectionStatement, className) {
@@ -98,9 +83,8 @@ let Notes_Core = (function () {
 
     return {
         toFormattedDateString: toFormattedDateString,
-        createNoteList: createNoteList,
+        compileTemplate: compileTemplate,
         getElements: getElements,
-        createElement: createElement,
         addClass: addClass,
         removeClass: removeClass
     };

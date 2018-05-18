@@ -17,20 +17,6 @@ let Notes_Main = (function () {
         Notes_Logging.log(level, 'Notes_Main', functionName + '(): ' + message);
     }
 
-    function goToPage(pageName) {
-        const PAGES = ['view-notes', 'edit-notes'];
-        try {
-            if ( pageName === '' ) { throw 'empty' }
-            if ( !PAGES.includes(pageName) ) { throw 'not supported' }
-        }
-        catch (e) {
-            log('error', 'goToPage', 'Parameter is ' + e + '!');
-        }
-        const CLASS_NAME = 'hidden';
-        Notes_Core.addClass('main', CLASS_NAME);
-        Notes_Core.removeClass('#' + pageName, CLASS_NAME);
-    }
-    
     function setStyle(style) {
         const STYLES = ['black-white', 'colored'];
         const STYLE_VALUE = style.value;
@@ -50,36 +36,25 @@ let Notes_Main = (function () {
         }
     }
 
-    function html2list(html) {
-        const listElement = Notes_Core.createElement('ul');
-        listElement.classList.add('notes-list');
-        listElement.innerHTML = html;
-        return listElement;
+    function renderElements(templateID, context) {
+        const parentElement = Notes_Core.getElements('main')[0];
+        parentElement.innerHTML = Notes_Core.compileTemplate(templateID, context);
     }
 
     function showNotesList() {
-        const html = Notes_Core.createNoteList();
-        const element = html2list(html);
-        const parentElement = Notes_Core.getElements('#notes-list')[0];
-        if ( element.childElementCount !== 0 ) {
-            parentElement.innerHTML = '';
-            parentElement.appendChild(element);
-            Notes_Core.getElements('.notes-count')[0].innerHTML = '#' + element.childElementCount;
-            Notes_Core.addClass('.no-notes', 'hidden');
-            Notes_Core.removeClass('.notes-count', 'hidden');
-            Notes_Core.removeClass('#notes-interaction', 'hidden');
-        } else {
-            Notes_Core.addClass('#notes-interaction', 'hidden');
-            Notes_Core.addClass('.notes-count', 'hidden');
-            Notes_Core.removeClass('.no-notes', 'hidden');
-        }
-        goToPage('view-notes');
+        const notes = Notes_DataHandling.loadAll('notes');
+        const context = {
+            date: new Date(),
+            count: notes.length,
+            notes: notes
+        };
+        renderElements('notes-list-template', context);
     }
 
     function newNote() {
-        goToPage('edit-notes');
+        renderElements('note-form-template', { note: {importance: 3} });
     }
-    
+
     function editNote(date) {
         try {
             if ( date === '' ) { throw 'empty' }
@@ -88,9 +63,10 @@ let Notes_Main = (function () {
         catch (e) {
             log('error', 'editNote', 'Parameter is ' + e + '!');
         }
-        Notes_DataHandling.loadItem('notes', date);
-        goToPage('edit-notes');
-        /* TODO: visualize data in form */
+        const context = {
+            note: Notes_DataHandling.loadItem('notes', date)
+        };
+        renderElements('note-form-template', context);
     }
 
     function changeNoteState(date, id) {
@@ -104,7 +80,7 @@ let Notes_Main = (function () {
         let item = Notes_DataHandling.loadItem('notes', date);
         item.done = Notes_Core.getElements('#' + id)[0].checked;
         if ( item.done ) {
-            item.completionDate = (new Date()).toISOString();
+            item.completionDate = (new Date()).toISOString().slice(0, -1);
         } else {
             item.completionDate = null;
         }
@@ -113,8 +89,8 @@ let Notes_Main = (function () {
     }
 
     function saveNote() {
-        const note = {
-            creationDate: Notes_Core.getElements('#note-creation-date')[0].value ? Notes_Core.getElements('#note-creation-date')[0].value : (new Date()).toISOString(),
+        let note = {
+            creationDate: Notes_Core.getElements('#note-creation-date')[0].value ? Notes_Core.getElements('#note-creation-date')[0].value : (new Date()).toISOString().slice(0, -1),
             title: Notes_Core.getElements('#note-title')[0].value,
             description: Notes_Core.getElements('#note-description')[0].value,
             importance: Notes_Core.getElements('#note-importance>input:checked')[0].value,
