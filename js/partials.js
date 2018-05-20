@@ -109,7 +109,6 @@ Handlebars.registerPartial(
         <input id="note-state" name="note-state" type="checkbox" value="{{done}}" hidden />
         <input id="note-creation-date" name="note-creation-date" type="datetime-local" value="{{creationDate}}" hidden />
         <div class="form-actions">
-            <!-- TODO: disable save button when form invalid or empty -->
             <button type="submit">Save</button>
             <button type="reset">Reset</button>
             <button type="reset" onclick="Notes_Main.showNotesList()">Back</button>

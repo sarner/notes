@@ -266,7 +266,6 @@ nav + nav {
     white-space: pre-line;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* TODO: With long text on one line, the note-description gets to wide and you have to scroll. */
 }
 
 .note-description > div.full-description {
@@ -387,10 +386,6 @@ nav + nav {
 
 .form-actions {
     margin-top: var(--app-clearance);
-}
-
-form:invalid > .form-actions > button[type=submit] {
-    /* TODO: set style for diabled save button */
 }
 
 
