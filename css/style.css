@@ -263,13 +263,19 @@ nav + nav {
 
 .note-description > div {
     max-height: 2.4em;
+    white-space: pre-line;
     overflow: hidden;
     text-overflow: ellipsis;
     /* TODO: With long text on one line, the note-description gets to wide and you have to scroll. */
 }
 
+.note-description > div.full-description {
+    max-height: inherit;
+}
+
 .note-description > button {
     border: none;
+    outline: none;
 }
 
 .note-container > .note-actions {

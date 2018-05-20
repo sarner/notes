@@ -51,6 +51,20 @@ let Notes_Main = (function () {
         renderElements('notes-list-template', context);
     }
 
+    function toggleDescriptionDisplay(element, date) {
+        try {
+            if ( date === '' ) { throw 'empty' }
+            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
+        }
+        catch (e) {
+            log('error', 'showFullDescription', 'Parameter is ' + e + '!');
+        }
+        const descriptionContainer = element.parentNode;
+        descriptionContainer.getElementsByTagName('div')[0].classList.toggle('full-description');
+        descriptionContainer.getElementsByTagName('i')[0].classList.toggle('fa-angle-down');
+        descriptionContainer.getElementsByTagName('i')[0].classList.toggle('fa-angle-up');
+    }
+
     function newNote() {
         renderElements('note-form-template', { note: {importance: 3} });
     }
@@ -116,6 +130,7 @@ let Notes_Main = (function () {
     return {
         setStyle: setStyle,
         showNotesList: showNotesList,
+        toggleDescriptionDisplay: toggleDescriptionDisplay,
         newNote: newNote,
         editNote: editNote,
         changeNoteState: changeNoteState,
