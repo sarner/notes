@@ -88,6 +88,9 @@ select {
     border-color: var(--color-accent);
 }
 
+button {
+    cursor: pointer;
+}
 
 button + button {
     margin-left: 0.3rem;
