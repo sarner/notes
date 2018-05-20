@@ -111,7 +111,7 @@ Handlebars.registerPartial(
         <div class="form-actions">
             <!-- TODO: disable save button when form invalid or empty -->
             <button type="submit">Save</button>
-            <button type="reset">Cancel</button>
+            <button type="reset">Reset</button>
             <button type="reset" onclick="Notes_Main.showNotesList()">Back</button>
         </div>
     </form>`
