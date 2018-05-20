@@ -41,8 +41,56 @@ let Notes_Main = (function () {
         parentElement.innerHTML = Notes_Core.compileTemplate(templateID, context);
     }
 
+    function compareValues(object1, object2) {
+        const sort = Notes_DataHandling.loadAll('sort');
+        if ( object1[sort.field] > object2[sort.field] ) {
+            return  sort.reverse ? 1 : -1;
+        }
+        if ( object1[sort.field] < object2[sort.field] ) {
+            return sort.reverse ? -1 : 1;
+        }
+        return 0;
+    }
+
+    function compareDates(object1, object2) {
+        const sort = Notes_DataHandling.loadAll('sort');
+        const value1 = Date.parse(object1[sort.field]);
+        const value2 = Date.parse(object2[sort.field]);
+        if ( value1 > value2 ) {
+            return  sort.reverse ? 1 : -1;
+        }
+        if ( value1 < value2 ) {
+            return sort.reverse ? -1 : 1;
+        }
+        return 0;
+    }
+
+    function sortByDueDate() {
+        const reverse = Notes_DataHandling.loadAll('sort').reverse ? false : true;
+        Notes_DataHandling.saveAll('sort', { field: 'dueDate', reverse: reverse });
+        showNotesList();
+    }
+
+    function sortByCreationDate() {
+        const reverse = Notes_DataHandling.loadAll('sort').reverse ? false : true;
+        Notes_DataHandling.saveAll('sort', { field: 'creationDate', reverse: reverse });
+        showNotesList();
+    }
+
+    function sortByImportance() {
+        const reverse = Notes_DataHandling.loadAll('sort').reverse ? false : true;
+        Notes_DataHandling.saveAll('sort', { field: 'importance', reverse: reverse });
+        showNotesList();
+    }
+
     function showNotesList() {
         const notes = Notes_DataHandling.loadAll('notes');
+        const sort = Notes_DataHandling.loadAll('sort');
+        if ( sort && sort.field === 'importance') {
+            notes.sort(compareValues);
+        } else if ( sort ) {
+            notes.sort(compareDates);
+        }
         const context = {
             date: new Date(),
             count: notes.length,
@@ -130,6 +178,9 @@ let Notes_Main = (function () {
     return {
         setStyle: setStyle,
         showNotesList: showNotesList,
+        sortByDueDate: sortByDueDate,
+        sortByCreationDate: sortByCreationDate,
+        sortByImportance: sortByImportance,
         toggleDescriptionDisplay: toggleDescriptionDisplay,
         newNote: newNote,
         editNote: editNote,

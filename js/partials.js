@@ -28,9 +28,9 @@ Handlebars.registerPartial(
     </nav>
     <nav id="notes-interaction">
         <div class="button-group">
-            <button type="button">By due date</button>
-            <button type="button">By created date</button>
-            <button type="button">By importance</button>
+            <button type="button" onclick="Notes_Main.sortByDueDate()">By due date</button>
+            <button type="button" onclick="Notes_Main.sortByCreationDate()">By creation date</button>
+            <button type="button" onclick="Notes_Main.sortByImportance()">By importance</button>
         </div>
         <div class="button-group">
             <button type="button">Show finished notes</button>
