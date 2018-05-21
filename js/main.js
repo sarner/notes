@@ -103,7 +103,7 @@ let Notes_Main = (function () {
         }
         const context = {
             date: new Date(),
-            count: notes.length,
+            count: notes.filter((note) => {return !Boolean(note.completionDate);}).length,
             notes: notes
         };
         renderElements('notes-list-template', context);
