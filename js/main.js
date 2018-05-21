@@ -83,9 +83,19 @@ let Notes_Main = (function () {
         showNotesList();
     }
 
+    function filterFinishedNotes() {
+        const showFinished = Notes_DataHandling.loadAll('filter').showFinished ? false : true;
+        Notes_DataHandling.saveAll('filter', { showFinished: showFinished });
+        showNotesList();
+    }
+
     function showNotesList() {
-        const notes = Notes_DataHandling.loadAll('notes');
+        let notes = Notes_DataHandling.loadAll('notes');
         const sort = Notes_DataHandling.loadAll('sort');
+        const showFinished = Notes_DataHandling.loadAll('filter').showFinished ? true : false;
+        if ( !showFinished ) {
+            notes = notes.filter((note) => {return !Boolean(note.completionDate);});
+        }
         if ( sort && sort.field === 'importance') {
             notes.sort(compareValues);
         } else if ( sort ) {
@@ -181,6 +191,7 @@ let Notes_Main = (function () {
         sortByDueDate: sortByDueDate,
         sortByCreationDate: sortByCreationDate,
         sortByImportance: sortByImportance,
+        filterFinishedNotes: filterFinishedNotes,
         toggleDescriptionDisplay: toggleDescriptionDisplay,
         newNote: newNote,
         editNote: editNote,

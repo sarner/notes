@@ -33,7 +33,7 @@ Handlebars.registerPartial(
             <button type="button" onclick="Notes_Main.sortByImportance()">By importance</button>
         </div>
         <div class="button-group">
-            <button type="button">Show finished notes</button>
+            <button type="button" onclick="Notes_Main.filterFinishedNotes()">Show finished notes</button>
         </div>
     </nav>
     <section>
