@@ -52,7 +52,7 @@ Handlebars.registerPartial(
 Handlebars.registerPartial(
     'noteListItem',
     `<li class="note-container" role="listitem">
-        <div class="note-due-date">{{localeDateString dueDate}}</div>
+        <div class="note-due-date"><time datetime="{{dueDate}}">{{localeDateString dueDate}}</time></div>
         <div class="note-header">
             <div class="note-title" role="heading">{{title}}</div>
             <div class="note-importance">
@@ -64,7 +64,7 @@ Handlebars.registerPartial(
             </div>
         </div>
         <div class="note-due-state">
-            <input id="note-finished-{{@index}}" type="checkbox" onchange="Notes_Main.changeNoteState('{{creationDate}}', this.id)" {{#if done}} checked aria-checked="true" {{else}} aria-checked="false" {{/if}} role="checkbox" /><label for="note-finished">Finished {{#if (sameDate completionDate date)}}<span>[today]</span>{{/if}}</label>
+            <input id="note-finished-{{@index}}" type="checkbox" onchange="Notes_Main.changeNoteState('{{creationDate}}', this.id)" {{#if done}} checked aria-checked="true" {{else}} aria-checked="false" {{/if}} role="checkbox" /><label for="note-finished">Finished {{#if (sameDate completionDate date)}}<span><time datetime="{{completionDate}}">[today]</time></span>{{/if}}</label>
         </div>
         <div class="note-description">
             <div>{{description}}</div>
