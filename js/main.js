@@ -127,7 +127,9 @@ let Notes_Main = (function () {
     }
 
     function newNote() {
-        renderElements('note-form-template', { note: {importance: 3} });
+        let dueDate = new Date();
+        dueDate.setDate(dueDate.getDate() + 7);
+        renderElements('note-form-template', { note: {importance: 3, dueDate: dueDate.toISOString().slice(0,10)} });
     }
 
     function editNote(date) {
