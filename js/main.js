@@ -19,19 +19,22 @@ let Notes_Main = (function () {
 
     function setStyle(style) {
         const STYLES = ['black-white', 'colored'];
-        const STYLE_VALUE = style.value;
+        if ( style.length === 0 ) {
+            style = 'black-white';
+        }
         try {
-            if ( STYLE_VALUE === '' ) { throw 'empty' }
-            if ( !STYLES.includes(STYLE_VALUE) ) { throw 'not supported' }
+            if ( !STYLES.includes(style) ) { throw 'not supported' }
         }
         catch (e) {
             log('error', 'setStyle', 'Parameter is ' + e + '!');
         }
+        Notes_DataHandling.saveAll('style', style);
+        document.getElementById('style-selector').value = style;
         const SELECTION_STATEMENT = 'body';
         const CLASS_NAME = 'app-colored';
-        if ( STYLE_VALUE === 'black-white' ) {
+        if ( style === 'black-white' ) {
             Notes_Core.removeClass(SELECTION_STATEMENT, CLASS_NAME);
-        } else if ( STYLE_VALUE === 'colored' ) {
+        } else if ( style === 'colored' ) {
             Notes_Core.addClass(SELECTION_STATEMENT, CLASS_NAME);
         }
     }
@@ -210,6 +213,7 @@ let Notes_Main = (function () {
  */
 (function Main_initialize() {
     Notes_Main.showNotesList();
+    Notes_Main.setStyle(Notes_DataHandling.loadAll('style'));
     /* TODO: remove unnecessary logging */
     console.info('Notes_Main: Application initialized');
 })();

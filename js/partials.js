@@ -20,7 +20,7 @@ Handlebars.registerPartial(
         </div>
         <div>
             <label for="style-selector">Choose style:</label>
-            <select id="style-selector" onchange="Notes_Main.setStyle(this)">
+            <select id="style-selector" onchange="Notes_Main.setStyle(this.value)">
                 <option value="black-white">Black & white</option>
                 <option value="colored">Color</option>
             </select>
