@@ -92,6 +92,16 @@ button {
     cursor: pointer;
 }
 
+button[aria-checked=true] {
+    background-color: var(--color-grey);
+    color: var(--color-secondary);
+}
+
+.app-colored button[aria-checked=true] {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+}
+
 button + button {
     margin-left: 0.3rem;
 }

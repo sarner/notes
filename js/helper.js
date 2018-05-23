@@ -11,7 +11,7 @@
  * This module is responsible for providing
  * the helpers used with handlebars.
  */
-Handlebars.registerHelper('ifExpr', function (value1, operator, value2) {
+Handlebars.registerHelper('expr', function (value1, operator, value2) {
     if ( !isNaN(Number(value1)) ) {
         value1 = Number(value1);
     }

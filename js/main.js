@@ -94,17 +94,43 @@ let Notes_Main = (function () {
 
     function showNotesList() {
         let notes = Notes_DataHandling.loadAll('notes');
+        const sorting = [
+            {
+                name: 'dueDate',
+                description: 'By due date',
+                fnc: 'Notes_Main.sortByDueDate()',
+                comparison: 'date'
+            },
+            {
+                name: 'creationDate',
+                description: 'By creation date',
+                fnc: 'Notes_Main.sortByCreationDate()',
+                comparison: 'date'
+            },
+            {
+                name: 'importance',
+                description: 'By importance',
+                fnc: 'Notes_Main.sortByImportance()',
+                comparison: 'value'
+            }
+        ];
         const sort = Notes_DataHandling.loadAll('sort');
         const showFinished = Notes_DataHandling.loadAll('filter').showFinished ? true : false;
         if ( !showFinished ) {
             notes = notes.filter((note) => {return !Boolean(note.completionDate);});
         }
-        if ( sort && sort.field === 'importance') {
-            notes.sort(compareValues);
-        } else if ( sort ) {
-            notes.sort(compareDates);
+        if ( sort ) {
+            const activeSorting = sorting.filter((item) => {return item.name === sort.field;})[0];
+            if ( activeSorting.comparison === 'date') {
+                notes.sort(compareDates);
+            } else {
+                notes.sort(compareValues);
+            }
         }
         const context = {
+            sorting: sorting,
+            sort: sort,
+            filter: showFinished,
             date: new Date(),
             count: notes.filter((note) => {return !Boolean(note.completionDate);}).length,
             notes: notes
