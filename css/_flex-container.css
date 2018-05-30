@@ -1,0 +1,15 @@
+.flex-container {
+    display: flex;
+}
+
+.flex-container--column {
+    flex-direction: column;
+}
+
+.flex-container--space-between {
+    justify-content: space-between;
+}
+
+.flex-container--items-top {
+    align-items: flex-start;
+}

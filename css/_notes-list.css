@@ -1,0 +1,17 @@
+.notes-list {
+    list-style: none;
+    padding: 0;
+}
+
+.notes-list--empty {
+    margin-top: var(--app-clearance);
+    text-align: center;
+}
+
+.notes-list__item {
+    padding: var(--half-app-clearance);
+}
+
+.notes-list__item + .notes-list__item {
+    border-top: solid 1px var(--text-color);
+}

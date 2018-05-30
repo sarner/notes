@@ -1,0 +1,20 @@
+.radio-group {
+    border: none;
+}
+
+.radio-group__item--hidden {
+    position: absolute;
+    visibility: hidden;
+}
+
+.radio-group__symbol {
+    cursor: pointer;
+}
+
+.radio-group__symbol--not-checked {
+    color: var(--placeholder-color);
+}
+
+.radio-group__symbol--checked {
+    color: var(--placeholder-color);
+}

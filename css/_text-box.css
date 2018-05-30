@@ -1,0 +1,20 @@
+.text-box__text {
+    white-space: pre-line;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-box__text--short {
+    max-height: 2.4em;
+}
+
+.text-box__text--full {
+    max-height: inherit;
+}
+
+.text-box__button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}

@@ -30,12 +30,13 @@ let Notes_Main = (function () {
         }
         Notes_DataHandling.saveAll('style', style);
         document.getElementById('style-selector').value = style;
-        const SELECTION_STATEMENT = 'body';
-        const CLASS_NAME = 'app-colored';
-        if ( style === 'black-white' ) {
-            Notes_Core.removeClass(SELECTION_STATEMENT, CLASS_NAME);
-        } else if ( style === 'colored' ) {
-            Notes_Core.addClass(SELECTION_STATEMENT, CLASS_NAME);
+        const BODY_ELEMENT = document.body;
+        for (let i = 0; i < STYLES.length; i++) {
+            if (STYLES[i] === style) {
+                BODY_ELEMENT.classList.add(style);
+            } else {
+                BODY_ELEMENT.classList.remove(STYLES[i]);
+            }
         }
     }
 
@@ -147,7 +148,8 @@ let Notes_Main = (function () {
             log('error', 'showFullDescription', 'Parameter is ' + e + '!');
         }
         const descriptionContainer = element.parentNode;
-        descriptionContainer.getElementsByTagName('div')[0].classList.toggle('full-description');
+        descriptionContainer.getElementsByTagName('div')[0].classList.toggle('text-box__text--short');
+        descriptionContainer.getElementsByTagName('div')[0].classList.toggle('text-box__text--full');
         descriptionContainer.getElementsByTagName('i')[0].classList.toggle('fa-angle-down');
         descriptionContainer.getElementsByTagName('i')[0].classList.toggle('fa-angle-up');
     }

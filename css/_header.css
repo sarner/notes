@@ -1,0 +1,6 @@
+.header__heading {
+    margin: 0 calc(-1 * var(--app-clearance)) 0.67em calc(-1 * var(--app-clearance));
+    padding: 0.67em var(--app-clearance);
+    background-color: var(--header-color);
+    border-bottom: var(--border-content);
+}

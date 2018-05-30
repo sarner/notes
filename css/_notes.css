@@ -1,0 +1,26 @@
+.notes__count {
+    position: absolute;
+    top: 1rem;
+    right: var(--app-clearance);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
+    background-color: var(--heading-color);
+    font-size: 1.2em;
+    color: var(--header-color);
+    border-radius: 50%;
+}
+
+.notes__navigation {
+    margin-top: var(--app-clearance);;
+}
+
+.notes__interaction {
+    margin-top: var(--app-clearance);
+}
+
+.notes__list {
+    margin-top: var(--app-clearance);
+}

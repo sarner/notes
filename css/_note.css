@@ -1,0 +1,36 @@
+.note {
+    display: grid;
+    grid-template-columns: 125px 1fr auto;
+    grid-column-gap: var(--app-clearance);
+    grid-template-rows: auto 1fr;
+    grid-row-gap: var(--half-app-clearance);
+    grid-template-areas:
+            'due-date title action'
+            'due-state description action';
+}
+
+.note__due-date {
+    grid-area: due-date;
+}
+
+.note__header {
+    grid-area: title;
+}
+
+.note__importance--not-set {
+    color: var(--placeholder-color);
+}
+
+.note__state {
+    grid-area: due-state;
+}
+
+.note__description {
+    grid-area: description;
+    padding: 2px;
+    border: solid 1px var(--placeholder-color);
+}
+
+.note__actions {
+    grid-area: action;
+}

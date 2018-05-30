@@ -1,0 +1,16 @@
+.button {
+    cursor: pointer;
+    color: var(--button-color-primary);
+    background-color: var(--button-color-secondary);
+    border: solid 1px var(--button-color-primary);
+}
+
+.button[aria-checked=true] {
+    color: var(--button-color-secondary);
+    background-color: var(--button-color-primary);
+    border: solid 1px var(--button-color-primary);
+}
+
+.button:focus {
+    outline: none;
+}

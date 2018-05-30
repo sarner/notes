@@ -1,0 +1,6 @@
+.footer {
+    margin: 0 calc( -1 * var(--app-clearance) );
+    padding: var(--half-app-clearance) var(--app-clearance);
+    background-color: var(--footer-color);
+    border-top: var(--border-content);
+}

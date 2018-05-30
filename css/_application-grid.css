@@ -1,0 +1,23 @@
+.grid-application {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+            'header'
+            'main'
+            'footer';
+    height: 100vh;
+    margin: 0 var(--app-clearance);
+}
+
+.grid-application__header {
+    grid-area: header;
+}
+
+.grid-application__content {
+    grid-area: main;
+    overflow-y: auto;
+}
+
+.grid-application__footer {
+    grid-area: footer;
+}
