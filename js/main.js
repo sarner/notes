@@ -13,21 +13,12 @@
  */
 let Notes_Main = (function () {
 
-    function log(level, functionName, message) {
-        Notes_Logging.log(level, 'Notes_Main', functionName + '(): ' + message);
-    }
-
     function setStyle(style) {
         const STYLES = ['black-white', 'colored'];
         if ( style.length === 0 ) {
             style = 'black-white';
         }
-        try {
-            if ( !STYLES.includes(style) ) { throw 'not supported' }
-        }
-        catch (e) {
-            log('error', 'setStyle', 'Parameter is ' + e + '!');
-        }
+        if ( !STYLES.includes(style) ) { throw Error('Parameter is not supported!'); }
         Notes_DataHandling.saveAll('style', style);
         document.getElementById('style-selector').value = style;
         const BODY_ELEMENT = document.body;
@@ -140,13 +131,8 @@ let Notes_Main = (function () {
     }
 
     function toggleDescriptionDisplay(element, date) {
-        try {
-            if ( date === '' ) { throw 'empty' }
-            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
-        }
-        catch (e) {
-            log('error', 'showFullDescription', 'Parameter is ' + e + '!');
-        }
+        if ( date === '' ) { throw Error('Parameter is empty!'); }
+        if ( isNaN(Date.parse(date)) ) { throw Error('Parameter is not a date!'); }
         const descriptionContainer = element.parentNode;
         descriptionContainer.getElementsByTagName('div')[0].classList.toggle('text-box__text--short');
         descriptionContainer.getElementsByTagName('div')[0].classList.toggle('text-box__text--full');
@@ -161,13 +147,8 @@ let Notes_Main = (function () {
     }
 
     function editNote(date) {
-        try {
-            if ( date === '' ) { throw 'empty' }
-            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
-        }
-        catch (e) {
-            log('error', 'editNote', 'Parameter is ' + e + '!');
-        }
+        if ( date === '' ) { throw Error('Parameter is empty!'); }
+        if ( isNaN(Date.parse(date)) ) { throw Error('Parameter is not a date!'); }
         const context = {
             note: Notes_DataHandling.loadItem('notes', date)
         };
@@ -175,13 +156,8 @@ let Notes_Main = (function () {
     }
 
     function changeNoteState(date, id) {
-        try {
-            if ( date === '' ) { throw 'empty' }
-            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
-        }
-        catch (e) {
-            log('error', 'editNote', 'Parameter is ' + e + '!');
-        }
+        if ( date === '' ) { throw Error('Parameter is empty!'); }
+        if ( isNaN(Date.parse(date)) ) { throw Error('Parameter is not a date!'); }
         let item = Notes_DataHandling.loadItem('notes', date);
         item.done = Notes_Core.getElements('#' + id)[0].checked;
         if ( item.done ) {
@@ -207,13 +183,8 @@ let Notes_Main = (function () {
     }
 
     function deleteNote(date) {
-        try {
-            if ( date === '' ) { throw 'empty' }
-            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
-        }
-        catch (e) {
-            log('error', 'editNote', 'Parameter is ' + e + '!');
-        }
+        if ( date === '' ) { throw Error('Parameter is empty!'); }
+        if ( isNaN(Date.parse(date)) ) { throw Error('Parameter is not a date!'); }
         Notes_DataHandling.deleteItem('notes', date);
         showNotesList();
     }
@@ -244,6 +215,4 @@ let Notes_Main = (function () {
 (function Main_initialize() {
     Notes_Main.showNotesList();
     Notes_Main.setStyle(Notes_DataHandling.loadAll('style'));
-    /* TODO: remove unnecessary logging */
-    console.info('Notes_Main: Application initialized');
 })();

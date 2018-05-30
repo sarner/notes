@@ -13,22 +13,13 @@
  */
 let Notes_Core = (function () {
 
-    function log(level, functionName, message) {
-        Notes_Logging.log(level, 'Notes_Core', functionName + '(): ' + message);
-    }
-
     function getTwoDigitsNumber(number) {
         return ('0' + number).slice(-2);
     }
 
     function toFormattedDateString(date) {
-        try {
-            if ( date === '' ) { throw 'empty' }
-            if ( isNaN(Date.parse(date)) ) { throw 'not a date' }
-        }
-        catch (e) {
-            log('error', 'toFormattedDateString', 'Parameter is ' + e + '!');
-        }
+        if ( date === '' ) { throw Error('Parameter is empty!'); }
+        if ( isNaN(Date.parse(date)) ) { throw Error('Parameter is not a date!'); }
         const year = date.getFullYear();
         const month = getTwoDigitsNumber(date.getMonth());
         const day = getTwoDigitsNumber(date.getDate());
@@ -42,24 +33,12 @@ let Notes_Core = (function () {
     }
 
     function getElements(selectionStatement) {
-        try {
-            if ( selectionStatement === '' ) { throw 'empty' }
-        }
-        catch (e) {
-            log('error', 'getElements', 'Parameter is ' + e + '!');
-        }
-
+        if ( selectionStatement === '' ) { throw Error('Parameter is empty!'); }
         return document.querySelectorAll(selectionStatement);
     }
 
     function addClass(selectionStatement, className) {
-        try {
-            if (selectionStatement === '' || className === '') { throw 'empty' }
-        }
-        catch (e) {
-            log('error', 'addClass', 'Parameters are ' + e + '!');
-        }
-
+        if (selectionStatement === '' || className === '') { throw Error('Parameters are empty!'); }
         let elements = document.querySelectorAll(selectionStatement);
         for (let i = 0; i < elements.length; ++i) {
             elements[i].classList.add(className);
@@ -67,13 +46,7 @@ let Notes_Core = (function () {
     }
 
     function removeClass(selectionStatement, className) {
-        try {
-            if (selectionStatement === '' || className === '') { throw 'empty' }
-        }
-        catch (e) {
-            log('error', 'removeClass', 'Parameters are ' + e + '!');
-        }
-
+        if (selectionStatement === '' || className === '') { throw Error('Parameters are empty!'); }
         let elements = document.querySelectorAll(selectionStatement);
         for (let i = 0; i < elements.length; ++i) {
             elements[i].classList.remove(className);
@@ -89,15 +62,4 @@ let Notes_Core = (function () {
         removeClass: removeClass
     };
 
-})();
-
-
-/**
- * Core_initialize()
- *
- * Automatic initialisation of the core module.
- */
-(function Core_initialize() {
-    /* TODO: remove unnecessary logging */
-    console.info('Notes_Core: Module initialized');
 })();

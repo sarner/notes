@@ -14,10 +14,6 @@
 
 let Notes_DataHandling = (function () {
 
-    function log(level, functionName, message) {
-        Notes_Logging.log(level, 'Notes_DataHandling', functionName + '(): ' + message);
-    }
-
     function saveAllObjects(key, objects) {
         localStorage.setItem(key, JSON.stringify(objects));
     }
@@ -58,14 +54,8 @@ let Notes_DataHandling = (function () {
     function loadItem(key, date) {
         const objects = loadAllObjects(key);
         const results = objects.filter( (item) => { return item.creationDate === date } );
-        try {
-            if ( results.length === 0) { throw 'No' }
-            if ( results.length > 1 ) { throw 'Too many' }
-        }
-        catch (e) {
-            log('warning', 'loadItem', e + ' results!');
-            return null;
-        }
+        if ( results.length === 0) { throw Error('No results!'); }
+        if ( results.length > 1 ) { throw Error('Too many results!'); }
         return results[0];
     }
 
