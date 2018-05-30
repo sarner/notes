@@ -73,7 +73,7 @@ let Notes_Main = (function () {
     }
 
     function filterFinishedNotes() {
-        const showFinished = Notes_DataHandling.loadAll('filter').showFinished ? false : true;
+        const showFinished = !Notes_DataHandling.loadAll('filter').showFinished;
         Notes_DataHandling.saveAll('filter', { showFinished: showFinished });
         showNotesList();
     }
@@ -98,7 +98,7 @@ let Notes_Main = (function () {
             }
         ];
         const sort = Notes_DataHandling.loadAll('sort');
-        const showFinished = Notes_DataHandling.loadAll('filter').showFinished ? true : false;
+        const showFinished = !Notes_DataHandling.loadAll('filter').showFinished;
         if ( !showFinished ) {
             notes = notes.filter((note) => {return !Boolean(note.completionDate);});
         }
