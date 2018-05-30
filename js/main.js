@@ -31,9 +31,15 @@ let Notes_Main = (function () {
         }
     }
 
+    function compileTemplate(templateID, context) {
+        const templateScript = document.getElementById(templateID).innerHTML;
+        const template = Handlebars.compile(templateScript);
+        return template(context);
+    }
+
     function renderElements(templateID, context) {
-        const parentElement = Notes_Core.getElements('main')[0];
-        parentElement.innerHTML = Notes_Core.compileTemplate(templateID, context);
+        const parentElement = document.getElementsByTagName('main')[0];
+        parentElement.innerHTML = compileTemplate(templateID, context);
     }
 
     function compareValues(object1, object2) {
@@ -159,7 +165,7 @@ let Notes_Main = (function () {
         if ( date === '' ) { throw Error('Parameter is empty!'); }
         if ( isNaN(Date.parse(date)) ) { throw Error('Parameter is not a date!'); }
         let item = Notes_DataHandling.loadItem('notes', date);
-        item.done = Notes_Core.getElements('#' + id)[0].checked;
+        item.done = document.getElementById(id).checked;
         if ( item.done ) {
             item.completionDate = (new Date()).toISOString().slice(0, -1);
         } else {
@@ -171,12 +177,12 @@ let Notes_Main = (function () {
 
     function saveNote() {
         let note = {
-            creationDate: Notes_Core.getElements('#note-creation-date')[0].value ? Notes_Core.getElements('#note-creation-date')[0].value : (new Date()).toISOString().slice(0, -1),
-            title: Notes_Core.getElements('#note-title')[0].value,
-            description: Notes_Core.getElements('#note-description')[0].value,
-            importance: Notes_Core.getElements('#note-importance>input:checked')[0].value,
-            dueDate: Notes_Core.getElements('#note-due-date')[0].value,
-            done: Notes_Core.getElements('#note-state')[0].checked
+            creationDate: document.getElementById('note-creation-date').value ? document.getElementById('note-creation-date').value : (new Date()).toISOString().slice(0, -1),
+            title: document.getElementById('note-title').value,
+            description: document.getElementById('note-description').value,
+            importance: document.querySelector('#note-importance>input:checked')[0].value,
+            dueDate: document.getElementById('note-due-date').value,
+            done: document.getElementById('note-state').checked
         };
         Notes_DataHandling.saveItem('notes', note);
         showNotesList();

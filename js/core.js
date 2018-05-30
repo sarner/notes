@@ -26,40 +26,9 @@ let Notes_Core = (function () {
         return [year, month, day].join('-');
     }
 
-    function compileTemplate(templateID, context) {
-        const templateScript = getElements('#' + templateID)[0].innerHTML;
-        const template = Handlebars.compile(templateScript);
-        return template(context);
-    }
-
-    function getElements(selectionStatement) {
-        if ( selectionStatement === '' ) { throw Error('Parameter is empty!'); }
-        return document.querySelectorAll(selectionStatement);
-    }
-
-    function addClass(selectionStatement, className) {
-        if (selectionStatement === '' || className === '') { throw Error('Parameters are empty!'); }
-        let elements = document.querySelectorAll(selectionStatement);
-        for (let i = 0; i < elements.length; ++i) {
-            elements[i].classList.add(className);
-        }
-    }
-
-    function removeClass(selectionStatement, className) {
-        if (selectionStatement === '' || className === '') { throw Error('Parameters are empty!'); }
-        let elements = document.querySelectorAll(selectionStatement);
-        for (let i = 0; i < elements.length; ++i) {
-            elements[i].classList.remove(className);
-        }
-    }
-
-
     return {
         toFormattedDateString: toFormattedDateString,
-        compileTemplate: compileTemplate,
-        getElements: getElements,
-        addClass: addClass,
-        removeClass: removeClass
+        compileTemplate: compileTemplate
     };
 
 })();
