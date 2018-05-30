@@ -66,21 +66,9 @@ let Notes_Main = (function () {
         return 0;
     }
 
-    function sortByDueDate() {
-        const reverse = Notes_DataHandling.loadAll('sort').reverse ? false : true;
-        Notes_DataHandling.saveAll('sort', { field: 'dueDate', reverse: reverse });
-        showNotesList();
-    }
-
-    function sortByCreationDate() {
-        const reverse = Notes_DataHandling.loadAll('sort').reverse ? false : true;
-        Notes_DataHandling.saveAll('sort', { field: 'creationDate', reverse: reverse });
-        showNotesList();
-    }
-
-    function sortByImportance() {
-        const reverse = Notes_DataHandling.loadAll('sort').reverse ? false : true;
-        Notes_DataHandling.saveAll('sort', { field: 'importance', reverse: reverse });
+    function sort(field) {
+        const reverse = !Notes_DataHandling.loadAll('sort').reverse;
+        Notes_DataHandling.saveAll('sort', { field: field, reverse: reverse });
         showNotesList();
     }
 
@@ -96,19 +84,16 @@ let Notes_Main = (function () {
             {
                 name: 'dueDate',
                 description: 'By due date',
-                fnc: 'Notes_Main.sortByDueDate()',
                 comparison: 'date'
             },
             {
                 name: 'creationDate',
                 description: 'By creation date',
-                fnc: 'Notes_Main.sortByCreationDate()',
                 comparison: 'date'
             },
             {
                 name: 'importance',
                 description: 'By importance',
-                fnc: 'Notes_Main.sortByImportance()',
                 comparison: 'value'
             }
         ];
@@ -198,9 +183,7 @@ let Notes_Main = (function () {
     return {
         setStyle: setStyle,
         showNotesList: showNotesList,
-        sortByDueDate: sortByDueDate,
-        sortByCreationDate: sortByCreationDate,
-        sortByImportance: sortByImportance,
+        sort: sort,
         filterFinishedNotes: filterFinishedNotes,
         toggleDescriptionDisplay: toggleDescriptionDisplay,
         newNote: newNote,

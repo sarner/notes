@@ -31,7 +31,7 @@ Handlebars.registerPartial(
             <div class="flex-container__item" role="menu">
                 {{#each sorting}}
                     <button class="button" type="button" role="button"
-                        onclick="{{fnc}}"
+                        onclick="Notes_Main.sort('{{name}}')"
                         {{#if (expr ../sort.field '===' name)}}aria-checked="true"{{/if}}>
                         {{description}}
                         <i class="fas {{#if (expr ../sort.field '===' name)}}{{#if ../sort.reverse}}fa-sort-up{{else}}fa-sort-down{{/if}}{{else}}fa-sort{{/if}} fa-fw" aria-hidden="true"></i>
