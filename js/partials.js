@@ -121,4 +121,4 @@ Handlebars.registerPartial(
             <button class="button" type="reset" onclick="Notes_Main.showNotesList()" role="button">Back</button>
         </div>
     </form>`
-)
+);

@@ -4,6 +4,7 @@
 
 'use strict';
 
+import * as Handlebars from "./handlebars";
 
 /**
  * Notes_main
