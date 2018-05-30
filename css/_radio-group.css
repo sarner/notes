@@ -16,5 +16,5 @@
 }
 
 .radio-group__symbol--checked {
-    color: var(--placeholder-color);
+    color: var(--text-color);
 }
