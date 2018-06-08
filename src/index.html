@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Notes</title>
+        <link rel="shortcut icon" href="./favicon.ico" />
+        <link rel="stylesheet" href="css/main.css" />
+    </head>
+    <body class="black-white">
+        <div class="grid-application" role="none">
+            <header class="grid-application__header header" role="banner">
+                <h1 class="header__heading" role="heading">
+                    <span>Notes - </span>
+                    <small>organize your day</small>
+                </h1>
+            </header>
+            <main id="js-content-container" class="grid-application__content" role="main">
+            </main>
+            <footer class="grid-application__footer footer" role="contentinfo">
+                <div class="heading" role="doc-credit">
+                    Created by Samuel Abächerli
+                </div>
+            </footer>
+        </div>
+        <script id="js-notes-navigation-template" type="text/x-handlebars-template">
+            {{> notesNavigation}}
+        </script>
+        <script id="js-notes-interaction-template" type="text/x-handlebars-template">
+            {{> notesInteraction}}
+        </script>
+        <script id="js-notes-list-template" type="text/x-handlebars-template">
+            {{> notesList}}
+        </script>
+        <script id="js-notes-count-template" type="text/x-handlebars-template">
+            {{> notesCount}}
+        </script>
+        <script id="js-note-form-template" type="text/x-handlebars-template">
+            {{> noteForm}}
+        </script>
+        <script src="../node_modules/handlebars/dist/handlebars.js"></script>
+        <script type="module" src="js/data/storage.js"></script>
+        <script type="module" src="js/model/date.js"></script>
+        <script type="module" src="js/model/number.js"></script>
+        <script type="module" src="js/model/note.js"></script>
+        <script type="module" src="js/model/note-service.js"></script>
+        <script type="module" src="js/templating/helper.js"></script>
+        <script type="module" src="js/templating/notes-navigation.js"></script>
+        <script type="module" src="js/templating/notes-interaction.js"></script>
+        <script type="module" src="js/templating/notes-list.js"></script>
+        <script type="module" src="js/templating/notes-count.js"></script>
+        <script type="module" src="js/templating/note-form.js"></script>
+        <script type="module" src="js/controller/list.js"></script>
+        <script type="module" src="js/controller/form.js"></script>
+        <script type="module" src="js/controller/main.js"></script>
+    </body>
+</html>

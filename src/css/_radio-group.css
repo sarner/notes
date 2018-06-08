@@ -9,12 +9,13 @@
 
 .radio-group__symbol {
     cursor: pointer;
+    color: var(--text-color);
 }
 
-.radio-group__symbol--not-checked {
+.radio-group__item--hidden:checked ~ .radio-group__symbol {
     color: var(--placeholder-color);
 }
 
-.radio-group__symbol--checked {
+.radio-group__item--hidden:checked + .radio-group__symbol {
     color: var(--text-color);
 }
