@@ -1,6 +1,7 @@
 'use strict';
 
 import {default as StorageService} from '../data/storage.js';
+import {default as EventCtrl} from './event.js';
 import {default as StyleService} from './style.js';
 import {default as NoteService} from '../model/note-service.js';
 import {default as Note} from '../model/note.js';
@@ -10,6 +11,9 @@ class ListCtrl {
     constructor () {
         this.storageService = new StorageService();
         this.noteService = new NoteService();
+        this.notesNavigationEventCtrl = new EventCtrl();
+        this.notesInteractionEventCtrl = new EventCtrl();
+        this.notesListEventCtrl = new EventCtrl();
         this.notesCountId = 'js-notes-count';
         this.notesNavigationId = 'js-notes-navigation';
         this.notesInteractionId = 'js-notes-interaction';
@@ -41,24 +45,49 @@ class ListCtrl {
         containerElement.appendChild(df);
     }
 
+    initListener() {
+        this.notesNavigationEventCtrl.addListener(
+            'js-new-note',
+            'click',
+            this.handleNewNote
+        );
+        this.notesInteractionEventCtrl.addListener(
+            'js-notes-ordering',
+            'click',
+            this.handleNotesOrdering.bind(this)
+        );
+        this.notesInteractionEventCtrl.addListener(
+            'js-notes-filtering',
+            'click',
+            this.handleNotesFiltering.bind(this)
+        );
+        this.notesListEventCtrl.addListener(
+            'js-notes-list',
+            'click',
+            this.handleNotesListClick.bind(this)
+        );
+    }
+
     showNotesNavigation() {
+        this.notesNavigationEventCtrl.unregisterEvents();
         document.getElementById(this.notesNavigationId).innerHTML = this.notesNavigationTemplateCreator();
-        document.getElementById('js-new-note').addEventListener('click', this.handleNewNote);
+        this.notesNavigationEventCtrl.registerEvents();
         new StyleService(document.getElementById('js-style-selector'));
     }
     
     showNotesInteraction() {
+        this.notesInteractionEventCtrl.unregisterEvents();
         document.getElementById(this.notesInteractionId).innerHTML = this.notesInteractionTemplateCreator({
             orderOptions: this.noteService.orderOptions,
             orderBy: this.noteService.orderBy,
             filterOptions: this.noteService.filterOptions,
             filter: this.noteService.filter
         });
-        document.getElementById('js-notes-ordering').addEventListener('click', this.handleNotesOrdering.bind(this));
-        document.getElementById('js-notes-filtering').addEventListener('click', this.handleNotesFiltering.bind(this));
+        this.notesInteractionEventCtrl.registerEvents();
     }
     
     showNotesList() {
+        this.notesListEventCtrl.unregisterEvents();
         const notes = this.noteService.notes;
         document.getElementById(this.notesListId).innerHTML = this.notesListTemplateCreator({
             date: new Date(),
@@ -66,7 +95,7 @@ class ListCtrl {
             importanceOptions: this.noteService.importanceOptions,
             count: notes.length
         });
-        document.getElementById('js-notes-list').addEventListener('click', this.handleNotesListClick.bind(this));
+        this.notesListEventCtrl.registerEvents();
     }
 
     showNotesCount() {
@@ -170,6 +199,7 @@ class ListCtrl {
 function init() {
     const listCtrl = new ListCtrl();
     listCtrl.initHtmlStructure();
+    listCtrl.initListener();
     listCtrl.updateUI();
 }
 
