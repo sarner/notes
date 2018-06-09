@@ -5,7 +5,7 @@ Handlebars.registerPartial(
     `<form class="form" id="js-note-form" method="POST" role="form">
         <div class="form__item--clearance form-group form-group--size-middle" role="group">
             <label class="form-group__label" for="js-note-title">Title</label>
-            <input class="form-group__field"
+            <input class="form-group__field js-validate"
                 id="js-note-title"
                 name="note-title"
                 type="text"
@@ -16,7 +16,7 @@ Handlebars.registerPartial(
         </div>
         <div class="form__item--clearance form-group form-group--size-middle" role="group">
             <label class="form-group__label" for="js-note-description">Description</label>
-            <textarea class="form-group__field"
+            <textarea class="form-group__field js-validate"
                 id="js-note-description"
                 name="note-description"
                 role="textbox"
@@ -47,7 +47,6 @@ Handlebars.registerPartial(
                     </label>
                 {{/each}}
             </div>
-            <div class="form-group__error form-group__error--hidden" role="alert">Please set an importance</div>
         </div>
         <div class="form__item--clearance form-group form-group--size-middle" role="group">
             <label class="form-group__label" for="js-note-due-date">Due date</label>
@@ -57,7 +56,6 @@ Handlebars.registerPartial(
                 type="date"
                 value="{{note.dueDate}}"
                 required />
-            <div  class="form-group__error form-group__error--hidden" role="alert">Please select a date</div>
         </div>
         <div class="form__item--clearance" role="menu">
             <button class="button" type="submit" role="button">Save</button>

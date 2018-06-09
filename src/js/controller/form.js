@@ -29,10 +29,8 @@ class FormCtrl {
     }
 
     handleInvalidForm(event) {
-        const element = event.target;
-        let isFormGroupField = false;
-        element.classList.forEach((cssClass) => {cssClass === 'form-group__field' ? isFormGroupField = true : false});
-        if ((element.parentNode.id === 'js-note-importance') || (isFormGroupField === false)) {
+        const element = event.target.closest('.js-validate');
+        if (event.target.closest('.js-validate') === null ) {
             return false;
         }
         const errorElement = element.nextElementSibling;
