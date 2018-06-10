@@ -38,7 +38,7 @@ class StorageService {
     }
 
     addNote(note) {
-        let notes = this.readLocalStorage(this.notesKey);
+        let notes = this.readLocalStorage(this.notesKey) || [];
         notes.push(note);
         this.writeLocalStorage(this.notesKey, notes);
         return notes;
