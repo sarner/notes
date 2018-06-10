@@ -15,10 +15,10 @@ cd notes
 npm install
 ```
 
-## Usage
+## Start app server
 
 ```bash
 npm start
 ```
 
-The application is now usable with http://localhost:1234
+The application is now usable with http://localhost:1234 on Chrome

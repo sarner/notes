@@ -1,7 +1,17 @@
 'use strict';
 
-const serve = require('serve');
+const path = require('path');
+const express = require('express');
 
-const server = serve('src/', {
-    port: 1234
+const app = express();
+
+app.use('/externals', express.static(path.join(__dirname, '/node_modules')));
+app.use(express.static(path.join(__dirname, '/src')));
+
+app.get('/', function (req, res) {
+    res.sendFile('index.html');
+});
+
+app.listen(1234, function () {
+    console.log('App listening on port 1234!');
 });

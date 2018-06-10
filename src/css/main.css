@@ -1,6 +1,6 @@
-@import url("../../node_modules/normalize-css/normalize.css");
-@import url("../../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css");
-@import url("../../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css");
+@import url("/externals/normalize-css/normalize.css");
+@import url("/externals/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css");
+@import url("/externals/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css");
 @import url("_variables.css");
 @import url("_font.css");
 @import url("_button.css");
