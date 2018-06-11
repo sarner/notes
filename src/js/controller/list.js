@@ -188,10 +188,10 @@ class ListCtrl {
 
     handleTextBoxHeightToggle(element) {
         const descriptionContainer = element.parentNode;
-        descriptionContainer.getElementsByTagName('div')[0].classList.toggle('text-box__text--short');
-        descriptionContainer.getElementsByTagName('div')[0].classList.toggle('text-box__text--full');
-        descriptionContainer.getElementsByTagName('i')[0].classList.toggle('fa-angle-down');
-        descriptionContainer.getElementsByTagName('i')[0].classList.toggle('fa-angle-up');
+        descriptionContainer.querySelector('div').classList.toggle('text-box__text--short');
+        descriptionContainer.querySelector('div').classList.toggle('text-box__text--full');
+        descriptionContainer.querySelector('i').classList.toggle('fa-angle-down');
+        descriptionContainer.querySelector('i').classList.toggle('fa-angle-up');
     }
 
 }
