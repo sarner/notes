@@ -1,5 +1,5 @@
 import {default as initNotesList} from './list.js';
 
 (function () {
-    window.onload = initNotesList;
+    window.addEventListener('load', initNotesList);
 }());
