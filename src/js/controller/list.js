@@ -6,6 +6,10 @@ import {default as StyleService} from './style.js';
 import {default as NoteService} from '../model/note-service.js';
 import {default as Note} from '../model/note.js';
 import {default as initNotesForm} from './form.js';
+import '../templating/notes-navigation.js';
+import '../templating/notes-interaction.js';
+import '../templating/notes-list.js';
+import '../templating/notes-count.js';
 
 class ListCtrl {
     constructor () {

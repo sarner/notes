@@ -4,6 +4,7 @@ import {default as StorageService} from '../data/notes-storage.js';
 import {default as EventCtrl} from "./event.js";
 import {default as NoteService} from '../model/note-service.js';
 import {default as initNotesList} from './list.js';
+import '../templating/note-form.js';
 
 class FormCtrl {
     constructor (note, action) {
