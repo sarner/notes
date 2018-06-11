@@ -1,6 +1,6 @@
 'use strict';
 
-import {default as StorageService} from '../data/storage.js';
+import {default as StorageService} from '../data/notes-storage.js';
 import {default as EventCtrl} from './event.js';
 import {default as StyleService} from './style.js';
 import {default as NoteService} from '../model/note-service.js';

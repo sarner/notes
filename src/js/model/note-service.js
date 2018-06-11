@@ -1,17 +1,19 @@
 'use strict';
 
-import {default as StorageService} from '../data/storage.js';
+import {default as SettingsStorage} from '../data/settings-storage.js';
+import {default as StorageService} from '../data/notes-storage.js';
 import {default as Note} from './note.js';
 
 class NoteService {
     constructor () {
+        this.settings = new SettingsStorage();
         this.storage = new StorageService();
         this.orderOptions = [
             new Order('dueDate', 'By due date'),
             new Order('creationDate', 'By creation date'),
             new Order('importance', 'By importance')
         ];
-        this.orderBy = this.storage.readLocalStorage('order');
+        this.orderBy = this.settings.getSettingByKey('order');
         this.filterOptions = [
             new Filter('completionDate', 'Hide finished notes')
         ];
@@ -22,7 +24,7 @@ class NoteService {
             new Importance('high-importance', 4, 'High importance'),
             new Importance('very-high-importance', 5, 'Very high importance')
         ];
-        this.filter = this.storage.readLocalStorage('filter');
+        this.filter = this.settings.getSettingByKey('filter');
         this.notes = this.storage.getNotes(this.orderBy, this.filter) || [];
     }
 
@@ -32,7 +34,7 @@ class NoteService {
 
     set orderBy(orderBy) {
         this.orderBy_ = orderBy;
-        this.storage.writeLocalStorage('order', this.orderBy);
+        this.settings.setSetting('order', this.orderBy);
     }
 
     get filter() {
@@ -41,7 +43,7 @@ class NoteService {
 
     set filter(filter) {
         this.filter_ = filter;
-        this.storage.writeLocalStorage('filter', filter);
+        this.settings.setSetting('filter', filter);
     }
 
     get notes() {

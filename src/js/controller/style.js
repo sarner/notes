@@ -1,12 +1,12 @@
 'use strict';
 
-import {default as StorageService} from '../data/storage.js';
+import {default as SettingsService} from '../data/settings-storage.js';
 
 class StyleService {
     constructor (element) {
-        this.storage = new StorageService();
+        this.settings = new SettingsService();
         this.bodyElement = document.body;
-        this.style = this.storage.readLocalStorage('style') || 'black-white';
+        this.style = this.settings.getSettingByKey('style') || 'black-white';
         this.styleSelectorElement = element;
         this.styleSelectorElement.value = this.style;
         this.styleSelectorElement.addEventListener('change', (event) => {this.style = event.target.value;});
@@ -18,7 +18,7 @@ class StyleService {
 
     set style(style) {
         this.style_ = style;
-        this.storage.writeLocalStorage('style', this.style);
+        this.settings.setSetting('style', this.style);
         this.updateUI();
     }
 
