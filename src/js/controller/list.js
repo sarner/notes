@@ -114,6 +114,7 @@ class ListCtrl {
         this.showNotesInteraction();
         this.showNotesList();
         this.showNotesCount();
+        document.body.classList.remove('hidden');
     }
 
     handleNotesOrdering(event) {
