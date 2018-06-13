@@ -120,11 +120,7 @@ class ListCtrl {
     handleNotesOrdering(event) {
         const element = event.target.closest('button');
         let orderReverse = element.dataset.orderReverse;
-        if (orderReverse === 'false') {
-            orderReverse = true;
-        } else {
-            orderReverse = false;
-        }
+        orderReverse = orderReverse === 'false';
         this.noteService.orderBy = {
             name: element.dataset.orderBy,
             reverse: orderReverse
