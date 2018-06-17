@@ -21,4 +21,4 @@ npm install
 npm start
 ```
 
-The application is now usable with http://localhost:1234 on Chrome
+The application is now usable with http://127.0.0.1:1234/ on modern browsers like Chrome or Edge
