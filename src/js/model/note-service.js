@@ -1,8 +1,7 @@
 'use strict';
 
-import {default as SettingsStorage} from '../data/settings-storage.js';
-import {default as StorageService} from '../data/notes-storage.js';
-import {default as Note} from './note.js';
+import {default as SettingsStorage} from '../services/settings-storage.js';
+import {default as StorageService} from '../services/notes-storage.js';
 
 class NoteService {
     constructor () {
@@ -25,7 +24,6 @@ class NoteService {
             new Importance('very-high-importance', 5, 'Very high importance')
         ];
         this.filter = this.settings.getSettingByKey('filter');
-        this.notes = this.storage.getNotes(this.orderBy, this.filter) || [];
     }
 
     get orderBy() {
@@ -37,6 +35,14 @@ class NoteService {
         this.settings.setSetting('order', this.orderBy);
     }
 
+    order(object1, object2) {
+        if (this.orderBy.reverse) {
+            return (object1[this.orderBy.name] > object2[this.orderBy.name]) ? 1 : -1;
+        } else {
+            return (object1[this.orderBy.name] > object2[this.orderBy.name]) ? -1 : 1;
+        }
+    }
+
     get filter() {
         return this.filter_;
     }
@@ -46,30 +52,35 @@ class NoteService {
         this.settings.setSetting('filter', filter);
     }
 
-    get notes() {
-        this.notes_ = this.storage.getNotes(this.orderBy, this.filter);
-        return this.notes_;
-    }
-
-    set notes(notes) {
-        this.notes_ = notes;
-    }
-
-    addNote(note) {
-        if (note instanceof Note) {
-            this.notes.push(note);
-            this.notes = this.storage.addNote(note);
-        } else {
-            throw Error('Expected parameter to be instance of class Note');
+    async getNotes() {
+        let notes = await this.storage.getNotes()
+        if (notes) {
+            if (this.filter) {
+                notes = notes.filter((note) => {
+                    return !Boolean(note[this.filter]);
+                });
+            }
+            if (this.orderBy) {
+                notes.sort(this.order.bind(this));
+            }
         }
+        return notes || [];
     }
 
-    deleteNote(note) {
-        if (note instanceof Note) {
-            this.notes = this.storage.deleteNote(note);
-        } else {
-            throw Error('Expected parameter to be instance of class Note');
-        }
+    async getNoteById(noteId) {
+        return await this.storage.getNoteById(noteId);
+    }
+
+    async addNote(note) {
+        return await this.storage.addNote(note);
+    }
+
+    async updateNote(noteId, changes) {
+        return await this.storage.updateNote(noteId, changes);
+    }
+
+    async deleteNote(noteId) {
+        return await this.storage.deleteNote(noteId);
     }
 }
 

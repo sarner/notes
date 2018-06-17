@@ -1,19 +1,22 @@
 'use strict';
 
-import {default as StorageService} from '../data/notes-storage.js';
 import {default as EventCtrl} from "./event.js";
+import {default as Note} from '../model/note.js';
 import {default as NoteService} from '../model/note-service.js';
 import {default as initNotesList} from './list.js';
 import '../templating/note-form.js';
 
 class FormCtrl {
-    constructor (note, action) {
-        this.action = action;
-        this.note = note;
+    constructor (noteId) {
+        this.noteId = noteId;
         this.formEventCtrl = new EventCtrl();
         this.noteService = new NoteService();
-        this.storageService = new StorageService();
         this.noteFormTemplateCreator = Handlebars.compile(document.getElementById('js-note-form-template').innerHTML);
+    }
+
+    async build() {
+        const note = await this.noteService.getNoteById(this.noteId) || {};
+        this.note = new Note(note);
     }
 
     initListener() {
@@ -71,10 +74,10 @@ class FormCtrl {
         this.note.description = document.getElementById('js-note-description').value;
         this.note.importance = document.querySelector('#js-note-importance>input:checked').value;
         this.note.dueDate = document.getElementById('js-note-due-date').value;
-        if (this.action === 'new') {
+        if (this.noteId === null) {
             this.noteService.addNote(this.note);
-        } else if (this.action === 'edit') {
-            this.storageService.updateNote(this.note);
+        } else {
+            this.noteService.updateNote(this.noteId, this.note);
         }
         initNotesList();
     }
@@ -85,8 +88,9 @@ class FormCtrl {
 
 }
 
-function init(note, action) {
-    const formCtrl = new FormCtrl(note, action);
+async function init(noteId) {
+    const formCtrl = new FormCtrl(noteId);
+    await formCtrl.build();
     formCtrl.initListener();
     formCtrl.updateUI();
 }

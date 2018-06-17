@@ -38,7 +38,7 @@ Handlebars.registerPartial(
                 class="text-align-middle"
                 type="checkbox"
                 data-action="complete"
-                data-note-id="{{creationDate}}"
+                data-note-id="{{_id}}"
                 {{#if completed}}
                     checked aria-checked="true"
                 {{else}}
@@ -59,10 +59,10 @@ Handlebars.registerPartial(
         <div class="note__actions flex-container flex-container--space-between flex-container--column" role="menu">
             <button class="button" type="button" role="button"
                 data-action="edit"
-                data-note-id="{{creationDate}}">Edit</button>
+                data-note-id="{{_id}}">Edit</button>
             <button class="button" type="button" role="button"
                 data-action="delete"
-                data-note-id="{{creationDate}}">Delete</button>
+                data-note-id="{{_id}}">Delete</button>
         </div>
     </li>`
 );

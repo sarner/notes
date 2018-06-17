@@ -1,6 +1,6 @@
 'use strict';
 
-import {default as SettingsService} from '../data/settings-storage.js';
+import {default as SettingsService} from '../services/settings-storage.js';
 
 class StyleService {
     constructor (element) {

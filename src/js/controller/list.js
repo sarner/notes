@@ -1,10 +1,8 @@
 'use strict';
 
-import {default as StorageService} from '../data/notes-storage.js';
 import {default as EventCtrl} from './event.js';
 import {default as StyleService} from './style.js';
 import {default as NoteService} from '../model/note-service.js';
-import {default as Note} from '../model/note.js';
 import {default as initNotesForm} from './form.js';
 import '../templating/notes-navigation.js';
 import '../templating/notes-interaction.js';
@@ -13,7 +11,6 @@ import '../templating/notes-count.js';
 
 class ListCtrl {
     constructor () {
-        this.storageService = new StorageService();
         this.noteService = new NoteService();
         this.notesNavigationEventCtrl = new EventCtrl();
         this.notesInteractionEventCtrl = new EventCtrl();
@@ -90,9 +87,9 @@ class ListCtrl {
         this.notesInteractionEventCtrl.registerEvents();
     }
     
-    showNotesList() {
+    async showNotesList() {
         this.notesListEventCtrl.unregisterEvents();
-        const notes = this.noteService.notes;
+        const notes = await this.noteService.getNotes();
         document.getElementById(this.notesListId).innerHTML = this.notesListTemplateCreator({
             date: new Date(),
             notes: notes,
@@ -102,8 +99,8 @@ class ListCtrl {
         this.notesListEventCtrl.registerEvents();
     }
 
-    showNotesCount() {
-        const notes = this.noteService.notes;
+    async showNotesCount() {
+        let notes = await this.noteService.getNotes();
         document.getElementById(this.notesCountId).innerHTML = this.notesCountTemplateCreator({
             count: notes.filter((note) => {return !note.completed}).length
         });
@@ -141,24 +138,21 @@ class ListCtrl {
     }
 
     handleNewNote() {
-        initNotesForm(new Note({}), 'new');
+        initNotesForm(null);
     }
 
     handleNotesListClick(event) {
         const element = event.target.closest('[data-action]');
-        let note;
-        if (typeof element.dataset.noteId !== 'undefined') {
-            note = new Note(this.storageService.getNoteById(element.dataset.noteId));
-        }
+        const noteId = element.dataset.noteId;
         switch (element.dataset.action){
             case 'complete':
-                this.handleCompletionState(note, element.checked);
+                this.handleCompletionState(noteId, element.checked);
                 break;
             case 'edit':
-                this.handleEditNote(note);
+                this.handleEditNote(noteId);
                 break;
             case 'delete':
-                this.handleDeleteNote(note);
+                this.handleDeleteNote(noteId);
                 break;
             case 'toggleTextBoxHeight':
                 this.handleTextBoxHeightToggle(element);
@@ -166,23 +160,24 @@ class ListCtrl {
         }
     }
 
-    handleEditNote(note) {
-        initNotesForm(note, 'edit');
+    handleEditNote(noteId) {
+        initNotesForm(noteId);
     }
 
-    handleDeleteNote(note) {
-        this.noteService.deleteNote(note);
+    handleDeleteNote(noteId) {
+        this.noteService.deleteNote(noteId);
         this.showNotesList();
     }
 
-    handleCompletionState(note, checked) {
+    handleCompletionState(noteId, checked) {
+        let changes = {};
         if (checked) {
-            note.completionDate = new Date();
+            changes.completionDate = new Date();
         } else {
-            note.completionDate = null;
+            changes.completionDate = null;
         }
-        note.completed = checked;
-        this.storageService.updateNote(note);
+        changes.completed = checked;
+        this.noteService.updateNote(noteId, changes);
         this.showNotesList();
         this.showNotesCount();
     }
