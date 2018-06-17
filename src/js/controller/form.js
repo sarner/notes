@@ -68,16 +68,16 @@ class FormCtrl {
         }
     }
 
-    handleSaveNote(event) {
+    async handleSaveNote(event) {
         event.preventDefault();
         this.note.title = document.getElementById('js-note-title').value;
         this.note.description = document.getElementById('js-note-description').value;
         this.note.importance = document.querySelector('#js-note-importance>input:checked').value;
         this.note.dueDate = document.getElementById('js-note-due-date').value;
         if (this.noteId === null) {
-            this.noteService.addNote(this.note);
+            await this.noteService.addNote(this.note);
         } else {
-            this.noteService.updateNote(this.noteId, this.note);
+            await this.noteService.updateNote(this.noteId, this.note);
         }
         initNotesList();
     }

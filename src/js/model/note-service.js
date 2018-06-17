@@ -53,7 +53,7 @@ class NoteService {
     }
 
     async getNotes() {
-        let notes = await this.storage.getNotes()
+        let notes = await this.storage.getNotes();
         if (notes) {
             if (this.filter) {
                 notes = notes.filter((note) => {

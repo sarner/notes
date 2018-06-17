@@ -1,4 +1,4 @@
-'use strict;'
+'use strict';
 
 import Datastorage from 'nedb-promise';
 
