@@ -3,13 +3,10 @@
 import {default as SettingsService} from '../services/settings-storage.js';
 
 class StyleService {
-    constructor (element) {
+    constructor () {
         this.settings = new SettingsService();
         this.bodyElement = document.body;
         this.style = this.settings.getSettingByKey('style') || 'black-white';
-        this.styleSelectorElement = element;
-        this.styleSelectorElement.value = this.style;
-        this.styleSelectorElement.addEventListener('change', (event) => {this.style = event.target.value;});
     }
 
     get style()  {

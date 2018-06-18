@@ -4,6 +4,7 @@ import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 
+import {indexRoutes} from "./routes/index-routes";
 import {notesRoutes} from './routes/notes-routes';
 
 const app = express();
@@ -13,10 +14,7 @@ app.use(express.static(path.join(path.resolve('./src'))));
 
 app.use(bodyParser.json());
 
-app.get('/', function (request, response) {
-    response.sendFile('index.html');
-});
-
+app.use('/', indexRoutes);
 app.use('/notes', notesRoutes);
 app.use(function (request, response, next) {
     response.setHeader('Content-Type', 'text/html');

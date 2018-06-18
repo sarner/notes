@@ -1,9 +1,9 @@
 'use strict';
 
 import {default as EventCtrl} from "./event.js";
+import {default as StyleService} from './style.js';
 import {default as Note} from '../model/note.js';
 import {default as NoteService} from '../model/note-service.js';
-import {default as initNotesList} from './list.js';
 import '../templating/note-form.js';
 
 class FormCtrl {
@@ -49,10 +49,12 @@ class FormCtrl {
             importanceOptions: this.noteService.importanceOptions
         });
         this.formEventCtrl.registerEvents();
+        new StyleService();
     }
 
     updateUI() {
         this.showNoteForm();
+        document.body.classList.remove('hidden');
     }
 
     handleInvalidForm(event) {
@@ -79,16 +81,18 @@ class FormCtrl {
         } else {
             await this.noteService.updateNote(this.noteId, this.note);
         }
-        initNotesList();
+        window.location = '/';
     }
 
     handleShowNotes() {
-        initNotesList();
+        window.location = '/';
     }
 
 }
 
-async function init(noteId) {
+async function init() {
+    const url = new URL(window.location.href);
+    const noteId = url.searchParams.get('id');
     const formCtrl = new FormCtrl(noteId);
     await formCtrl.build();
     formCtrl.initListener();

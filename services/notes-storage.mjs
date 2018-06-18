@@ -41,7 +41,7 @@ class NotesStorage {
     }
 
     async delete(id) {
-        await this.db.delete({_id: id});
+        await this.db.remove({_id: id});
         return true;
     }
 

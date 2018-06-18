@@ -13,12 +13,8 @@
                     <span>Notes - </span>
                     <small>organize your day</small>
                 </h1>
-                <div id="js-notes-count"></div>
             </header>
-            <main class="grid-application__content" role="main">
-                <div id="js-notes-navigation"></div>
-                <div id="js-notes-interaction"></div>
-                <div id="js-notes-list"></div>
+            <main id="js-content-container" class="grid-application__content" role="main">
             </main>
             <footer class="grid-application__footer footer" role="contentinfo">
                 <div class="heading" role="doc-credit">
@@ -26,19 +22,10 @@
                 </div>
             </footer>
         </div>
-        <script id="js-notes-navigation-template" type="text/x-handlebars-template">
-            {{> notesNavigation}}
-        </script>
-        <script id="js-notes-interaction-template" type="text/x-handlebars-template">
-            {{> notesInteraction}}
-        </script>
-        <script id="js-notes-list-template" type="text/x-handlebars-template">
-            {{> notesList}}
-        </script>
-        <script id="js-notes-count-template" type="text/x-handlebars-template">
-            {{> notesCount}}
+        <script id="js-note-form-template" type="text/x-handlebars-template">
+            {{> noteForm}}
         </script>
         <script src="externals/handlebars/dist/handlebars.js"></script>
-        <script type="module" src="js/controller/index.js"></script>
+        <script type="module" src="js/controller/edit.js"></script>
     </body>
 </html>

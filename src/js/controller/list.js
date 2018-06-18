@@ -3,7 +3,6 @@
 import {default as EventCtrl} from './event.js';
 import {default as StyleService} from './style.js';
 import {default as NoteService} from '../model/note-service.js';
-import {default as initNotesForm} from './form.js';
 import '../templating/notes-navigation.js';
 import '../templating/notes-interaction.js';
 import '../templating/notes-list.js';
@@ -24,26 +23,6 @@ class ListCtrl {
         this.notesInteractionTemplateCreator = Handlebars.compile(document.getElementById('js-notes-interaction-template').innerHTML);
         this.notesListTemplateCreator = Handlebars.compile(document.getElementById('js-notes-list-template').innerHTML);
         this.notesCountTemplateCreator = Handlebars.compile(document.getElementById('js-notes-count-template').innerHTML);
-    }
-
-    initHtmlStructure() {
-        const elementIds = [
-            this.notesCountId,
-            this.notesNavigationId,
-            this.notesInteractionId,
-            this.notesListId
-        ];
-        let df = document.createDocumentFragment();
-        elementIds.forEach((id) => {
-            let element = document.createElement('div');
-            element.setAttribute('id', id);
-            df.appendChild(element);
-        });
-        let containerElement = document.getElementById('js-content-container');
-        while (containerElement.firstChild) {
-            containerElement.removeChild(containerElement.firstChild);
-        }
-        containerElement.appendChild(df);
     }
 
     initListener() {
@@ -69,11 +48,17 @@ class ListCtrl {
         );
     }
 
+    setStyle() {
+        const styleService = new StyleService();
+        this.styleSelectorElement = document.getElementById('js-style-selector');
+        this.styleSelectorElement.value = styleService.style;
+        this.styleSelectorElement.addEventListener('change', (event) => {styleService.style = event.target.value;});
+    }
+
     showNotesNavigation() {
         this.notesNavigationEventCtrl.unregisterEvents();
         document.getElementById(this.notesNavigationId).innerHTML = this.notesNavigationTemplateCreator();
         this.notesNavigationEventCtrl.registerEvents();
-        new StyleService(document.getElementById('js-style-selector'));
     }
     
     showNotesInteraction() {
@@ -108,6 +93,7 @@ class ListCtrl {
 
     updateUI() {
         this.showNotesNavigation();
+        this.setStyle();
         this.showNotesInteraction();
         this.showNotesList();
         this.showNotesCount();
@@ -138,7 +124,7 @@ class ListCtrl {
     }
 
     handleNewNote() {
-        initNotesForm(null);
+        window.location = '/edit';
     }
 
     handleNotesListClick(event) {
@@ -161,7 +147,7 @@ class ListCtrl {
     }
 
     handleEditNote(noteId) {
-        initNotesForm(noteId);
+        window.location = `/edit?id=${noteId}`;
     }
 
     handleDeleteNote(noteId) {
@@ -194,7 +180,6 @@ class ListCtrl {
 
 function init() {
     const listCtrl = new ListCtrl();
-    listCtrl.initHtmlStructure();
     listCtrl.initListener();
     listCtrl.updateUI();
 }
