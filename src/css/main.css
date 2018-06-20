@@ -25,6 +25,11 @@ body {
     margin: 0;
 }
 
+input,
+textarea {
+    padding: 2px;
+}
+
 .hidden {
     display: none;
 }
