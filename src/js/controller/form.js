@@ -1,41 +1,41 @@
 'use strict';
 
-import {default as EventCtrl} from "./event.js";
-import {default as StyleService} from './style.js';
+import {default as EventHandler} from "./event.js";
+import {styleHandler} from './style.js';
 import {default as Note} from '../model/note.js';
-import {default as NoteService} from '../model/note-service.js';
+import {notesMgr} from '../model/notes-manager.js';
 import '../templating/note-form.js';
 
 class FormCtrl {
     constructor (noteId) {
         this.noteId = noteId;
-        this.formEventCtrl = new EventCtrl();
-        this.noteService = new NoteService();
+        this.formEventHandler = new EventHandler();
         this.noteFormTemplateCreator = Handlebars.compile(document.getElementById('js-note-form-template').innerHTML);
+        this.initListeners();
     }
 
     async build() {
-        const note = await this.noteService.getNoteById(this.noteId) || {};
+        const note = await notesMgr.getNoteById(this.noteId) || {};
         this.note = new Note(note);
     }
 
-    initListener() {
-        this.formEventCtrl.addListener(
+    initListeners() {
+        this.formEventHandler.addListener(
             'js-note-form',
             'submit',
             this.handleSaveNote.bind(this)
         );
-        this.formEventCtrl.addListener(
+        this.formEventHandler.addListener(
             'js-note-form',
             'input',
             this.handleInvalidForm.bind(this)
         );
-        this.formEventCtrl.addListener(
+        this.formEventHandler.addListener(
             'js-note-form',
             'focusout',
             this.handleInvalidForm.bind(this)
         );
-        this.formEventCtrl.addListener(
+        this.formEventHandler.addListener(
             'js-show-notes',
             'click',
             this.handleShowNotes.bind(this)
@@ -43,13 +43,12 @@ class FormCtrl {
     }
 
     showNoteForm() {
-        this.formEventCtrl.unregisterEvents();
+        this.formEventHandler.unregisterEvents();
         document.getElementById('js-content-container').innerHTML = this.noteFormTemplateCreator({
             note: this.note,
-            importanceOptions: this.noteService.importanceOptions
+            importanceOptions: notesMgr.importanceOptions
         });
-        this.formEventCtrl.registerEvents();
-        new StyleService();
+        this.formEventHandler.registerEvents();
     }
 
     updateUI() {
@@ -77,11 +76,11 @@ class FormCtrl {
         this.note.importance = document.querySelector('#js-note-importance>input:checked').value;
         this.note.dueDate = document.getElementById('js-note-due-date').value;
         if (this.noteId === null) {
-            await this.noteService.addNote(this.note);
+            await notesMgr.addNote(this.note);
         } else {
-            await this.noteService.updateNote(this.noteId, this.note);
+            await notesMgr.updateNote(this.noteId, this.note);
         }
-        window.location = '/';
+        this.handleShowNotes();
     }
 
     handleShowNotes() {
@@ -91,11 +90,10 @@ class FormCtrl {
 }
 
 async function init() {
+    styleHandler.updateUI();
     const url = new URL(window.location.href);
-    const noteId = url.searchParams.get('id');
-    const formCtrl = new FormCtrl(noteId);
+    const formCtrl = new FormCtrl(url.searchParams.get('id'));
     await formCtrl.build();
-    formCtrl.initListener();
     formCtrl.updateUI();
 }
 

@@ -1,6 +1,7 @@
 'use strict';
 
-class EventCtrl {
+class EventHandler {
+
     constructor () {
         this.listeners = [];
     }
@@ -23,6 +24,7 @@ class EventCtrl {
             }
         });
     }
+
 }
 
 class Listener {
@@ -33,4 +35,4 @@ class Listener {
     }
 }
 
-export default EventCtrl;
+export default EventHandler;

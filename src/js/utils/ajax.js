@@ -12,4 +12,4 @@ class AjaxUtil {
 
 }
 
-export default AjaxUtil;
+export const ajax = new AjaxUtil();

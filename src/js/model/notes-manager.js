@@ -1,18 +1,16 @@
 'use strict';
 
-import {default as SettingsStorage} from '../services/settings-storage.js';
-import {default as StorageService} from '../services/notes-storage.js';
+import {settingsStorage} from '../services/settings-storage.js';
+import {notesStorage} from '../services/notes-storage.js';
 
-class NoteService {
+class NotesManager {
+
     constructor () {
-        this.settings = new SettingsStorage();
-        this.storage = new StorageService();
         this.orderOptions = [
             new Order('dueDate', 'By due date'),
             new Order('creationDate', 'By creation date'),
             new Order('importance', 'By importance')
         ];
-        this.orderBy = this.settings.getSettingByKey('order');
         this.filterOptions = [
             new Filter('completionDate', 'Hide finished notes')
         ];
@@ -23,16 +21,14 @@ class NoteService {
             new Importance('high-importance', 4, 'High importance'),
             new Importance('very-high-importance', 5, 'Very high importance')
         ];
-        this.filter = this.settings.getSettingByKey('filter');
     }
 
     get orderBy() {
-        return this.orderBy_;
+        return settingsStorage.getSettingByKey('order');
     }
 
     set orderBy(orderBy) {
-        this.orderBy_ = orderBy;
-        this.settings.setSetting('order', this.orderBy);
+        settingsStorage.setSetting('order', orderBy);
     }
 
     order(object1, object2) {
@@ -44,16 +40,15 @@ class NoteService {
     }
 
     get filter() {
-        return this.filter_;
+        return settingsStorage.getSettingByKey('filter');
     }
 
     set filter(filter) {
-        this.filter_ = filter;
-        this.settings.setSetting('filter', filter);
+        settingsStorage.setSetting('filter', filter);
     }
 
     async getNotes() {
-        let notes = await this.storage.getNotes();
+        let notes = await notesStorage.getNotes();
         if (notes) {
             if (this.filter) {
                 notes = notes.filter((note) => {
@@ -68,20 +63,21 @@ class NoteService {
     }
 
     async getNoteById(noteId) {
-        return await this.storage.getNoteById(noteId);
+        return await notesStorage.getNoteById(noteId);
     }
 
     async addNote(note) {
-        return await this.storage.addNote(note);
+        return await notesStorage.addNote(note);
     }
 
     async updateNote(noteId, changes) {
-        return await this.storage.updateNote(noteId, changes);
+        return await notesStorage.updateNote(noteId, changes);
     }
 
     async deleteNote(noteId) {
-        return await this.storage.deleteNote(noteId);
+        return await notesStorage.deleteNote(noteId);
     }
+
 }
 
 class Order {
@@ -106,4 +102,4 @@ class Importance {
     }
 }
 
-export default NoteService;
+export const notesMgr = new NotesManager();

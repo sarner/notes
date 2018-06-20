@@ -1,27 +1,22 @@
 'use strict';
 
-import {default as SettingsService} from '../services/settings-storage.js';
+import {settingsStorage} from '../services/settings-storage.js';
 
-class StyleService {
-    constructor () {
-        this.settings = new SettingsService();
-        this.bodyElement = document.body;
-        this.style = this.settings.getSettingByKey('style') || 'black-white';
-    }
+class StyleHandler {
 
     get style()  {
-        return this.style_;
+        return settingsStorage.getSettingByKey('style') || 'black-white';
     }
 
     set style(style) {
-        this.style_ = style;
-        this.settings.setSetting('style', this.style);
+        settingsStorage.setSetting('style', style);
         this.updateUI();
     }
 
     updateUI() {
-        this.bodyElement.classList = this.style;
+        document.body.classList = this.style;
     }
+
 }
 
-export default StyleService;
+export const styleHandler = new StyleHandler();

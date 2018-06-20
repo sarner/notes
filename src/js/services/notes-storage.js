@@ -1,15 +1,11 @@
 'use strict';
 
-import AjaxUtil from '../utils/ajax-utils.js';
+import {ajax} from '../utils/ajax.js';
 
-class StorageRestService {
-
-    constructor () {
-        this.ajaxUtil = new AjaxUtil();
-    }
+class NotesStorage {
 
     async getNotes() {
-        return await this.ajaxUtil.sendRequest(
+        return await ajax.sendRequest(
             'GET',
             '/notes',
             undefined,
@@ -18,7 +14,7 @@ class StorageRestService {
     }
 
     async addNote(note) {
-        return await this.ajaxUtil.sendRequest(
+        return await ajax.sendRequest(
             'POST',
             '/notes',
             note,
@@ -27,7 +23,7 @@ class StorageRestService {
     }
 
     async updateNote(id, changes) {
-        return await this.ajaxUtil.sendRequest(
+        return await ajax.sendRequest(
             'PUT',
             `/notes/${id}`,
             changes,
@@ -36,7 +32,7 @@ class StorageRestService {
     }
 
     async deleteNote(id) {
-        return await this.ajaxUtil.sendRequest(
+        return await ajax.sendRequest(
             'DELETE',
             `/notes/${id}`,
             undefined,
@@ -45,7 +41,7 @@ class StorageRestService {
     }
 
     async getNoteById(id) {
-        return await this.ajaxUtil.sendRequest(
+        return await ajax.sendRequest(
             'GET',
             `/notes/${id}`,
             undefined,
@@ -54,4 +50,4 @@ class StorageRestService {
     }
 }
 
-export default StorageRestService;
+export const notesStorage = new NotesStorage();

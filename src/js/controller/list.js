@@ -1,47 +1,51 @@
 'use strict';
 
-import {default as EventCtrl} from './event.js';
-import {default as StyleService} from './style.js';
-import {default as NoteService} from '../model/note-service.js';
+import {default as EventHandler} from './event.js';
+import {styleHandler} from './style.js';
+import {notesMgr} from '../model/notes-manager.js';
 import '../templating/notes-navigation.js';
 import '../templating/notes-interaction.js';
 import '../templating/notes-list.js';
 import '../templating/notes-count.js';
 
 class ListCtrl {
-    constructor () {
-        this.noteService = new NoteService();
-        this.notesNavigationEventCtrl = new EventCtrl();
-        this.notesInteractionEventCtrl = new EventCtrl();
-        this.notesListEventCtrl = new EventCtrl();
-        this.notesCountId = 'js-notes-count';
-        this.notesNavigationId = 'js-notes-navigation';
-        this.notesInteractionId = 'js-notes-interaction';
-        this.notesListId = 'js-notes-list';
 
+    constructor () {
+        this.initEventHandlers();
+        this.initTemplateCreators();
+        this.initListeners();
+    }
+
+    initEventHandlers() {
+        this.notesNavigationEventHandler = new EventHandler();
+        this.notesInteractionEventHandler = new EventHandler();
+        this.notesListEventHandler = new EventHandler();
+    }
+
+    initTemplateCreators() {
         this.notesNavigationTemplateCreator = Handlebars.compile(document.getElementById('js-notes-navigation-template').innerHTML);
         this.notesInteractionTemplateCreator = Handlebars.compile(document.getElementById('js-notes-interaction-template').innerHTML);
         this.notesListTemplateCreator = Handlebars.compile(document.getElementById('js-notes-list-template').innerHTML);
         this.notesCountTemplateCreator = Handlebars.compile(document.getElementById('js-notes-count-template').innerHTML);
     }
 
-    initListener() {
-        this.notesNavigationEventCtrl.addListener(
+    initListeners() {
+        this.notesNavigationEventHandler.addListener(
             'js-new-note',
             'click',
             this.handleNewNote
         );
-        this.notesInteractionEventCtrl.addListener(
+        this.notesInteractionEventHandler.addListener(
             'js-notes-ordering',
             'click',
             this.handleNotesOrdering.bind(this)
         );
-        this.notesInteractionEventCtrl.addListener(
+        this.notesInteractionEventHandler.addListener(
             'js-notes-filtering',
             'click',
             this.handleNotesFiltering.bind(this)
         );
-        this.notesListEventCtrl.addListener(
+        this.notesListEventHandler.addListener(
             'js-notes-list',
             'click',
             this.handleNotesListClick.bind(this)
@@ -49,51 +53,50 @@ class ListCtrl {
     }
 
     setStyle() {
-        const styleService = new StyleService();
-        this.styleSelectorElement = document.getElementById('js-style-selector');
-        this.styleSelectorElement.value = styleService.style;
-        this.styleSelectorElement.addEventListener('change', (event) => {styleService.style = event.target.value;});
+        const styleSelectorElement = document.getElementById('js-style-selector');
+        styleSelectorElement.value = styleHandler.style;
+        styleSelectorElement.addEventListener('change', (event) => {styleHandler.style = event.target.value;});
     }
 
     showNotesNavigation() {
-        this.notesNavigationEventCtrl.unregisterEvents();
-        document.getElementById(this.notesNavigationId).innerHTML = this.notesNavigationTemplateCreator();
-        this.notesNavigationEventCtrl.registerEvents();
+        this.notesNavigationEventHandler.unregisterEvents();
+        document.getElementById('js-notes-navigation').innerHTML = this.notesNavigationTemplateCreator();
+        this.notesNavigationEventHandler.registerEvents();
+        this.setStyle();
     }
     
     showNotesInteraction() {
-        this.notesInteractionEventCtrl.unregisterEvents();
-        document.getElementById(this.notesInteractionId).innerHTML = this.notesInteractionTemplateCreator({
-            orderOptions: this.noteService.orderOptions,
-            orderBy: this.noteService.orderBy,
-            filterOptions: this.noteService.filterOptions,
-            filter: this.noteService.filter
+        this.notesInteractionEventHandler.unregisterEvents();
+        document.getElementById('js-notes-interaction').innerHTML = this.notesInteractionTemplateCreator({
+            orderOptions: notesMgr.orderOptions,
+            orderBy: notesMgr.orderBy,
+            filterOptions: notesMgr.filterOptions,
+            filter: notesMgr.filter
         });
-        this.notesInteractionEventCtrl.registerEvents();
+        this.notesInteractionEventHandler.registerEvents();
     }
     
     async showNotesList() {
-        this.notesListEventCtrl.unregisterEvents();
-        const notes = await this.noteService.getNotes();
-        document.getElementById(this.notesListId).innerHTML = this.notesListTemplateCreator({
+        this.notesListEventHandler.unregisterEvents();
+        const notes = await notesMgr.getNotes();
+        document.getElementById('js-notes-list').innerHTML = this.notesListTemplateCreator({
             date: new Date(),
             notes: notes,
-            importanceOptions: this.noteService.importanceOptions,
+            importanceOptions: notesMgr.importanceOptions,
             count: notes.length
         });
-        this.notesListEventCtrl.registerEvents();
+        this.notesListEventHandler.registerEvents();
     }
 
     async showNotesCount() {
-        let notes = await this.noteService.getNotes();
-        document.getElementById(this.notesCountId).innerHTML = this.notesCountTemplateCreator({
+        let notes = await notesMgr.getNotes();
+        document.getElementById('js-notes-count').innerHTML = this.notesCountTemplateCreator({
             count: notes.filter((note) => {return !note.completed}).length
         });
     }
 
     updateUI() {
         this.showNotesNavigation();
-        this.setStyle();
         this.showNotesInteraction();
         this.showNotesList();
         this.showNotesCount();
@@ -104,7 +107,7 @@ class ListCtrl {
         const element = event.target.closest('button');
         let orderReverse = element.dataset.orderReverse;
         orderReverse = orderReverse === 'false';
-        this.noteService.orderBy = {
+        notesMgr.orderBy = {
             name: element.dataset.orderBy,
             reverse: orderReverse
         };
@@ -114,10 +117,10 @@ class ListCtrl {
 
     handleNotesFiltering(event) {
         const element = event.target.closest('button');
-        if (this.noteService.filter === element.dataset.filter) {
-            this.noteService.filter = null;
+        if (notesMgr.filter === element.dataset.filter) {
+            notesMgr.filter = null;
         } else {
-            this.noteService.filter = element.dataset.filter;
+            notesMgr.filter = element.dataset.filter;
         }
         this.showNotesInteraction();
         this.showNotesList();
@@ -151,19 +154,16 @@ class ListCtrl {
     }
 
     async handleDeleteNote(noteId) {
-        await this.noteService.deleteNote(noteId);
+        await notesMgr.deleteNote(noteId);
         this.showNotesList();
+        this.showNotesCount();
     }
 
     async handleCompletionState(noteId, checked) {
         let changes = {};
-        if (checked) {
-            changes.completionDate = new Date();
-        } else {
-            changes.completionDate = null;
-        }
+        changes.completionDate = checked ? new Date () : null;
         changes.completed = checked;
-        await this.noteService.updateNote(noteId, changes);
+        await notesMgr.updateNote(noteId, changes);
         this.showNotesList();
         this.showNotesCount();
     }
@@ -179,8 +179,8 @@ class ListCtrl {
 }
 
 function init() {
+    styleHandler.updateUI();
     const listCtrl = new ListCtrl();
-    listCtrl.initListener();
     listCtrl.updateUI();
 }
 
