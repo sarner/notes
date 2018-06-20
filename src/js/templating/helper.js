@@ -1,5 +1,9 @@
 'use strict';
 
+Handlebars.registerHelper('replace', function (str, searchStr, replaceStr) {
+    return str.replace(new RegExp(searchStr, 'g'), replaceStr);
+});
+
 Handlebars.registerHelper('expr', function (value1, operator, value2) {
     if ( !isNaN(Number(value1)) ) {
         value1 = Number(value1);

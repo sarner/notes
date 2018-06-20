@@ -23,7 +23,7 @@ Handlebars.registerPartial(
                 placeholder="Description"
                 rows="3"
                 required>
-                {{~note.description~}}
+                {{~replace note.description '\n' '\r'~}}
             </textarea>
             <div class="form-group__error form-group__error--hidden" role="alert">Description missing</div>
         </div>
