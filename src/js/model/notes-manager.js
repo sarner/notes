@@ -8,8 +8,8 @@ class NotesManager {
     constructor () {
         this.orderOptions = [
             new Order('dueDate', 'By due date'),
-            new Order('creationDate', 'By creation date'),
-            new Order('importance', 'By importance')
+            new Order('importance', 'By importance'),
+            new Order('creationDate', 'By creation date')
         ];
         this.filterOptions = [
             new Filter('completionDate', 'Hide finished notes')
@@ -32,11 +32,22 @@ class NotesManager {
     }
 
     order(object1, object2) {
-        if (this.orderBy.reverse) {
-            return (object1[this.orderBy.name] > object2[this.orderBy.name]) ? 1 : -1;
-        } else {
-            return (object1[this.orderBy.name] > object2[this.orderBy.name]) ? -1 : 1;
+        const index = this.orderOptions.indexOfProperty('name', this.orderBy.name);
+        const orderByArray = this.orderOptions.moveElementToFirstPosition(index);
+        for (let i = 0; i < orderByArray.length; i++) {
+            const item = orderByArray[i];
+            const value1 = object1[item.name];
+            const value2 = object2[item.name];
+            if (value1 !== value2) {
+                const lgt = value1 > value2;
+                if (i === 0) {
+                    return this.orderBy.reverse ? lgt : !lgt;
+                } else {
+                    return !lgt;
+                }
+            }
         }
+        return 0;
     }
 
     get filter() {
