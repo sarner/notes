@@ -1,0 +1,22 @@
+.content-grid {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+            'navigation'
+            'interaction'
+            'list';
+    grid-row-gap: var(--app-clearance);
+}
+
+.content-grid__navigation {
+    grid-area: navigation;
+}
+
+.content-grid__interaction {
+    grid-area: interaction;
+}
+
+.content-grid__list {
+    grid-area: list;
+    overflow-y: auto;
+}

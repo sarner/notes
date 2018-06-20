@@ -15,7 +15,7 @@
 
 .grid-application__content {
     grid-area: main;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .grid-application__footer {
