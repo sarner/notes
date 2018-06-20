@@ -150,12 +150,12 @@ class ListCtrl {
         window.location = `/edit?id=${noteId}`;
     }
 
-    handleDeleteNote(noteId) {
-        this.noteService.deleteNote(noteId);
+    async handleDeleteNote(noteId) {
+        await this.noteService.deleteNote(noteId);
         this.showNotesList();
     }
 
-    handleCompletionState(noteId, checked) {
+    async handleCompletionState(noteId, checked) {
         let changes = {};
         if (checked) {
             changes.completionDate = new Date();
@@ -163,7 +163,7 @@ class ListCtrl {
             changes.completionDate = null;
         }
         changes.completed = checked;
-        this.noteService.updateNote(noteId, changes);
+        await this.noteService.updateNote(noteId, changes);
         this.showNotesList();
         this.showNotesCount();
     }
