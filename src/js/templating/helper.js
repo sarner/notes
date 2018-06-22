@@ -1,7 +1,9 @@
 'use strict';
 
 Handlebars.registerHelper('replace', function (str, searchStr, replaceStr) {
-    return str.replace(new RegExp(searchStr, 'g'), replaceStr);
+    if (str !== null && typeof str !== 'undefined') {
+        return str.replace(new RegExp(searchStr, 'g'), replaceStr);
+    }
 });
 
 Handlebars.registerHelper('expr', function (value1, operator, value2) {
