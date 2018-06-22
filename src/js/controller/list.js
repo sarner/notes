@@ -131,6 +131,9 @@ class ListCtrl {
 
     handleNotesListClick(event) {
         const element = event.target.closest('[data-action]');
+        if (element === null) {
+            return false;
+        }
         const noteId = element.dataset.noteId;
         switch (element.dataset.action){
             case 'complete':
