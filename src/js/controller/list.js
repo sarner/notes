@@ -100,7 +100,6 @@ class ListCtrl {
         this.showNotesInteraction();
         this.showNotesList();
         this.showNotesCount();
-        document.body.classList.remove('hidden');
     }
 
     handleNotesOrdering(event) {
@@ -179,7 +178,6 @@ class ListCtrl {
 }
 
 function init() {
-    styleHandler.updateUI();
     const listCtrl = new ListCtrl();
     listCtrl.updateUI();
 }

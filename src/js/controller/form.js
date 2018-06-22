@@ -1,7 +1,6 @@
 'use strict';
 
 import {default as EventHandler} from "./event.js";
-import {styleHandler} from './style.js';
 import {default as Note} from '../model/note.js';
 import {notesMgr} from '../model/notes-manager.js';
 import '../templating/note-form.js';
@@ -90,7 +89,6 @@ class FormCtrl {
 }
 
 async function init() {
-    styleHandler.updateUI();
     const url = new URL(window.location.href);
     const formCtrl = new FormCtrl(url.searchParams.get('id'));
     await formCtrl.build();
