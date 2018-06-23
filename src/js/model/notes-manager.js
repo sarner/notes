@@ -39,11 +39,11 @@ class NotesManager {
             const value1 = object1[item.name];
             const value2 = object2[item.name];
             if (value1 !== value2) {
-                const lgt = value1 > value2;
+                const lgt = value1 > value2 ? 1 : -1;
                 if (i === 0) {
-                    return this.orderBy.reverse ? lgt : !lgt;
+                    return this.orderBy.reverse ? lgt : lgt * -1;
                 } else {
-                    return !lgt;
+                    return lgt * -1;
                 }
             }
         }
