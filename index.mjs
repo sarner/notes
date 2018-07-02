@@ -1,6 +1,9 @@
 'use strict';
 
 import path from 'path';
+import fs from 'fs';
+import http from 'http';
+import https from 'https';
 import express from 'express';
 import bodyParser from 'body-parser';
 import jwt from 'express-jwt';
@@ -15,6 +18,15 @@ app.use('/externals', express.static(path.join(path.resolve('./node_modules'))))
 app.use(express.static(path.join(path.resolve('./src'))));
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(function (request, response, next) {
+    if (request.secure) {
+        next();
+    } else {
+        response.redirect('https://' + request.headers.host + request.url);
+    }
+});
 
 /* TODO: The secret should be in a (unversioned) config file or better be a private key or set as an environment variable*/
 const jwtSecret = 'EQnäcyj+VaMvZG@Dj#gHbTz<Guj6p§ä{Q==V<?VXFjZsÜ:öBt6,HdMAmG~WäÖhEt';
@@ -23,6 +35,7 @@ app.set('jwt-sign', {expiresIn: '1d', audience: 'self', issuer: 'notes'});
 app.set('jwt-validate', {secret: jwtSecret, audience: 'self', issuer: 'notes'});
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/', indexRoutes);
 app.use('/users', usersRoutes);
@@ -37,8 +50,14 @@ app.use(function (err, request, response, next) {
     }
 });
 
+const options = {
+    key: fs.readFileSync('encryption/private.key'),
+    cert: fs.readFileSync('encryption/certificate.crt')
+};
 const host = '127.0.0.1';
-const port = 1234;
-app.listen(port, host, function () {
-    console.log(`App listening at http://${host}:${port}/`);
+const httpPort = 80;
+const httpsPort = 443;
+http.createServer(app).listen(httpPort);
+https.createServer(options, app).listen(httpsPort, host, function () {
+    console.log(`App listening at https://${host}/`);
 });

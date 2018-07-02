@@ -26,6 +26,6 @@
     "util": "^0.11.0"
   },
   "scripts": {
-    "start": "node -r @std/esm index.mjs"
+    "start": "sudo node -r @std/esm index.mjs"
   }
 }
