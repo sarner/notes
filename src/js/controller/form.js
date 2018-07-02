@@ -1,6 +1,7 @@
 'use strict';
 
-import {default as EventHandler} from "./event.js";
+import {authentication} from '../services/authentication.js';
+import {default as EventHandler} from './event.js';
 import {default as Note} from '../model/note.js';
 import {notesMgr} from '../model/notes-manager.js';
 import '../templating/note-form.js';
@@ -8,7 +9,7 @@ import '../templating/note-form.js';
 class FormCtrl {
     constructor (noteId) {
         this.noteId = noteId;
-        this.formEventHandler = new EventHandler();
+        this.initEventHandlers();
         this.noteFormTemplateCreator = Handlebars.compile(document.getElementById('js-note-form-template').innerHTML);
         this.initListeners();
     }
@@ -18,7 +19,17 @@ class FormCtrl {
         this.note = new Note(note);
     }
 
+    initEventHandlers() {
+        this.formEventHandler = new EventHandler();
+        this.logoutEventHandler = new EventHandler();
+    }
+
     initListeners() {
+        this.logoutEventHandler.addListener(
+            'js-logout',
+            'click',
+            this.handleLogout
+        );
         this.formEventHandler.addListener(
             'js-note-form',
             'submit',
@@ -43,11 +54,13 @@ class FormCtrl {
 
     showNoteForm() {
         this.formEventHandler.unregisterEvents();
+        this.logoutEventHandler.unregisterEvents();
         document.getElementById('js-content-container').innerHTML = this.noteFormTemplateCreator({
             note: this.note,
             importanceOptions: notesMgr.importanceOptions
         });
         this.formEventHandler.registerEvents();
+        this.logoutEventHandler.registerEvents();
     }
 
     updateUI() {
@@ -83,12 +96,21 @@ class FormCtrl {
     }
 
     handleShowNotes() {
-        window.location = '/';
+        window.location.assign('/');
+    }
+
+    async handleLogout() {
+        await authentication.logout();
+        window.location.assign('/login');
     }
 
 }
 
 async function init() {
+    if (!authentication.isLoggedIn()) {
+        window.location.replace('/login');
+        return false;
+    }
     const url = new URL(window.location.href);
     const formCtrl = new FormCtrl(url.searchParams.get('id'));
     await formCtrl.build();

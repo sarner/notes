@@ -1,5 +1,6 @@
 'use strict';
 
+import {authentication} from '../services/authentication.js';
 import {default as EventHandler} from './event.js';
 import {styleHandler} from './style.js';
 import {notesMgr} from '../model/notes-manager.js';
@@ -17,6 +18,7 @@ class ListCtrl {
     }
 
     initEventHandlers() {
+        this.logoutEventHandler = new EventHandler();
         this.notesNavigationEventHandler = new EventHandler();
         this.notesInteractionEventHandler = new EventHandler();
         this.notesListEventHandler = new EventHandler();
@@ -30,6 +32,11 @@ class ListCtrl {
     }
 
     initListeners() {
+        this.logoutEventHandler.addListener(
+            'js-logout',
+            'click',
+            this.handleLogout
+        );
         this.notesNavigationEventHandler.addListener(
             'js-new-note',
             'click',
@@ -96,6 +103,7 @@ class ListCtrl {
     }
 
     updateUI() {
+        this.logoutEventHandler.registerEvents();
         this.showNotesNavigation();
         this.showNotesInteraction();
         this.showNotesList();
@@ -126,7 +134,7 @@ class ListCtrl {
     }
 
     handleNewNote() {
-        window.location = '/edit';
+        window.location.assign('/edit');
     }
 
     handleNotesListClick(event) {
@@ -152,7 +160,7 @@ class ListCtrl {
     }
 
     handleEditNote(noteId) {
-        window.location = `/edit?id=${noteId}`;
+        window.location.assign(`/edit?id=${noteId}`);
     }
 
     async handleDeleteNote(noteId) {
@@ -178,9 +186,18 @@ class ListCtrl {
         descriptionContainer.querySelector('i').classList.toggle('fa-angle-up');
     }
 
+    async handleLogout() {
+        await authentication.logout();
+        window.location.assign('/login');
+    }
+
 }
 
 function init() {
+    if (!authentication.isLoggedIn()) {
+        window.location.replace('/login');
+        return false;
+    }
     const listCtrl = new ListCtrl();
     listCtrl.updateUI();
 }

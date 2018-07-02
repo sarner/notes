@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Notes</title>
+        <link rel="shortcut icon" href="./favicon.ico" />
+        <link rel="stylesheet" href="css/main.css" />
+        <script type="module" src="js/controller/style-loader.js"></script>
+    </head>
+    <body>
+        <div class="grid-application" role="none">
+            <header class="grid-application__header header" role="banner">
+                <h1 class="header__heading" role="heading">
+                    <span>Notes - </span>
+                    <small>organize your day</small>
+                </h1>
+            </header>
+            <main class="grid-application__content" role="main">
+                <h2>Login</h2>
+                <form class="form" id="js-login-form" method="POST" role="form">
+                    <div class="form__item--clearance form-group form-group--size-middle" role="group">
+                        <label class="form-group__label" for="js-login-username">Username</label>
+                        <input class="form-group__field js-validate"
+                               id="js-login-username"
+                               name="username"
+                               type="text"
+                               placeholder="Username"
+                               required />
+                        <div class="form-group__error form-group__error--hidden" role="alert">Username missing</div>
+                    </div>
+                    <div class="form__item--clearance form-group form-group--size-middle" role="group">
+                        <label class="form-group__label" for="js-login-password">Password</label>
+                        <input class="form-group__field js-validate"
+                               id="js-login-password"
+                               name="password"
+                               type="password"
+                               placeholder="Password"
+                               required />
+                        <div class="form-group__error form-group__error--hidden" role="alert">Password missing</div>
+                    </div>
+                    <div class="form__item--clearance" role="group">
+                        <div id="js-login-failed" class="form-group__error form-group__error--hidden" role="alert">Login failed</div>
+                    </div>
+                    <div class="form__item--clearance" role="menu">
+                        <button id="js-login" class="button" type="submit" role="button">
+                            <i class="fas fa-user-shield fa-fw" aria-hidden="true"></i>
+                            <span aria-hidden="false">Login</span>
+                        </button>
+                        <a class="button" href="/registration">
+                            <i class="fas fa-user-plus fa-fw" aria-hidden="true"></i>
+                            <span aria-hidden="false">Registration</span>
+                        </a>
+                    </div>
+                </form>
+            </main>
+            <footer class="grid-application__footer footer" role="contentinfo">
+                <div class="heading" role="doc-credit">
+                    Created by Samuel Abächerli
+                </div>
+            </footer>
+        </div>
+        <script type="module" src="js/controller/login.js"></script>
+    </body>
+</html>

@@ -3,6 +3,8 @@
     color: var(--button-color-primary);
     background-color: var(--button-color-secondary);
     border: solid 1px var(--button-color-primary);
+    padding: 3px;
+    text-decoration: none;
 }
 
 .button[aria-checked=true] {

@@ -1,18 +1,19 @@
 'use strict';
 
 import {notesStorage} from '../services/notes-storage';
+import SecurityUtil from '../utils/security';
 
 class NotesCtrl {
 
     async getNotes(request, response) {
         response.json(
-            (await notesStorage.getAll() || [])
+            (await notesStorage.getAll(SecurityUtil.currentUser(request)) || [])
         );
     }
 
     async getNoteById(request, response) {
         response.json(
-            await notesStorage.getById(request.params.id)
+            await notesStorage.getById(request.params.id, SecurityUtil.currentUser(request))
         );
     }
 
@@ -25,20 +26,21 @@ class NotesCtrl {
                 request.body.importance,
                 request.body.dueDate,
                 request.body.completionDate,
-                request.body.completed
+                request.body.completed,
+                SecurityUtil.currentUser(request)
             )
         );
     }
 
     async updateNote(request, response) {
         response.json(
-            await notesStorage.update(request.params.id, request.body)
+            await notesStorage.update(request.params.id, request.body, SecurityUtil.currentUser(request))
         );
     }
 
     async deleteNote(request, response) {
         response.json(
-            await notesStorage.delete(request.params.id)
+            await notesStorage.delete(request.params.id, SecurityUtil.currentUser(request))
         );
     }
 

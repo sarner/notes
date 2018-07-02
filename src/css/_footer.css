@@ -3,4 +3,7 @@
     padding: var(--half-app-clearance) var(--app-clearance);
     background-color: var(--footer-color);
     border-top: var(--border-content);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

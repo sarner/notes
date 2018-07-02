@@ -10,6 +10,10 @@ class SettingsStorage {
         localStorage.setItem(key, JSON.stringify(value));
     }
 
+    deleteSetting(key) {
+        localStorage.removeItem(key);
+    }
+
 }
 
 export const settingsStorage = new SettingsStorage();
