@@ -20,3 +20,5 @@ class StyleHandler {
 }
 
 export const styleHandler = new StyleHandler();
+
+styleHandler.updateUI();

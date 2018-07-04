@@ -10,7 +10,7 @@ class Authentication {
     }
 
     async register(username, email, password) {
-        await ajax.sendRequest(
+        const token = await ajax.sendRequest(
             'POST',
             '/users/register',
             {
@@ -22,6 +22,7 @@ class Authentication {
                 'Content-Type': 'application/json'
             }
         );
+        settingsStorage.setSetting(this.tokenKey, token);
     }
 
     async login(username, password) {
