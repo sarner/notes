@@ -43,7 +43,7 @@ app.use(jwt(app.get('jwt-validate'))); // after this middleware a token is requi
 app.use('/notes', notesRoutes);
 app.use(function (err, request, response, next) {
     if (err.name === 'UnauthorizedError') {
-        response.status(401).json({error: 'No or invalid token provided!'});
+        response.status(401).json('No or invalid token provided!');
     } else {
         response.setHeader('Content-Type', 'text/html');
         response.status(404).send('Page not found!');
