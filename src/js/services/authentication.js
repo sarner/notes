@@ -12,7 +12,7 @@ class Authentication {
     async register(username, email, password) {
         const token = await ajax.sendRequest(
             'POST',
-            '/users/register',
+            '/api/users/register',
             {
                 username: username,
                 email: email,
@@ -28,7 +28,7 @@ class Authentication {
     async login(username, password) {
         const token = await ajax.sendRequest(
             'POST',
-            '/users/login',
+            '/api/users/login',
             {
                 username: username,
                 password: password

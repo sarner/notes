@@ -12,7 +12,7 @@ class NotesStorage {
     async getNotes() {
         return await ajax.sendRequest(
             'GET',
-            '/notes',
+            '/api/notes',
             undefined,
             {
                 'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ class NotesStorage {
     async addNote(note) {
         return await ajax.sendRequest(
             'POST',
-            '/notes',
+            '/api/notes',
             note,
             {
                 'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ class NotesStorage {
     async updateNote(id, changes) {
         return await ajax.sendRequest(
             'PUT',
-            `/notes/${id}`,
+            `/api/notes/${id}`,
             changes,
             {
                 'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ class NotesStorage {
     async deleteNote(id) {
         return await ajax.sendRequest(
             'DELETE',
-            `/notes/${id}`,
+            `/api/notes/${id}`,
             undefined,
             {
                 'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ class NotesStorage {
     async getNoteById(id) {
         return await ajax.sendRequest(
             'GET',
-            `/notes/${id}`,
+            `/api/notes/${id}`,
             undefined,
             {
                 'Content-Type': 'application/json',

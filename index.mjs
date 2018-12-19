@@ -38,9 +38,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/', indexRoutes);
-app.use('/users', usersRoutes);
+app.use('/api/users', usersRoutes);
 app.use(jwt(app.get('jwt-validate'))); // after this middleware a token is required!
-app.use('/notes', notesRoutes);
+app.use('/api/notes', notesRoutes);
 app.use(function (err, request, response, next) {
     if (err.name === 'UnauthorizedError') {
         response.status(401).json('No or invalid token provided!');
