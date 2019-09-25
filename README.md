@@ -15,10 +15,14 @@ cd notes
 npm install
 ```
 
+Add following files:
+- .\encryption\certificate.crt
+- .\encryption\private.key
+
 ## Start app server
 
 ```bash
 npm start
 ```
 
-The application is now usable with http://127.0.0.1:1234/ on modern browsers like Chrome or Edge
+The application is now usable with https://127.0.0.1/ on modern browsers like Chrome or Edge
